@@ -5,7 +5,7 @@ public class Constants {
 
     public static final String TIMEOUT = "1000";
 
-    public final static String SERVICE_NAME = "CHAT";
+    public final static String NAME = "CHAT";
 
     public static final String HELP = "";
 }
