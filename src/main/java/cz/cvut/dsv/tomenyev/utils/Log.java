@@ -9,35 +9,43 @@ import java.util.logging.Logger;
 
 public class Log {
 
+    private static Log instance;
+
     private FileOutputStream log;
 
-    /**
-     * Creates new logger.
-     * @param name name of the log
-     */
-    public Log(String name) {
+    private Log(String name) {
         try {
             log = new FileOutputStream(name, false);
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Log.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    /**
-     *  Writes message to log output.
-     * @param text string to be written to log
-     */
-    public void write(String text) {
-        text += System.lineSeparator();
-        try {
-            log.write(text.getBytes());
-        } catch (IOException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+
+    public void print(String to, String text) {
+        switch (to) {
+            case "FILE":
+                text += System.lineSeparator();
+                try {
+                    log.write(text.getBytes());
+                } catch (IOException ex) {
+                    Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            case "CONSOLE":
+                System.out.print(text);
         }
     }
 
-    /**
-     * Ends logging and closes output.
-     */
+    public void print(String text) {
+            text += System.lineSeparator();
+            System.out.print(text);
+            try {
+                log.write(text.getBytes());
+            } catch (IOException ex) {
+                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            System.out.print(text);
+    }
+
     public void close() {
         try {
             log.close();
@@ -46,5 +54,16 @@ public class Log {
         }
     }
 
+    public static Log getInstance(String path) {
+        if(instance == null)
+            instance = new Log(path);
+        return instance;
+    }
+
+    public static Log getInstance() {
+        if(instance == null)
+            instance = new Log("");
+        return instance;
+    }
 }
 
