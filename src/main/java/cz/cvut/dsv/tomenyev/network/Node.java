@@ -16,6 +16,7 @@ import java.util.Queue;
 @Getter
 @Setter
 @ToString(of = {"address", "next", "leader", "ok", "fixing", "income", "outcome"})
+
 public class Node extends UnicastRemoteObject implements AbstractNode {
 
     private final Address address;
@@ -51,7 +52,7 @@ public class Node extends UnicastRemoteObject implements AbstractNode {
         return this;
     }
 
-    public Node initElection() {
+    public Node initElection() throws RemoteException, NotBoundException {
         this.setOk(network.election(this));
         return this;
     }

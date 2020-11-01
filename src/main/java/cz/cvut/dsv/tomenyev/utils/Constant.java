@@ -18,4 +18,6 @@ public class Constant {
     public static final String COMMAND_NOT_FOUND = "Command not found";
 
     public static final String CHAT_HELP = "";
+
+    public static final String JOIN_MESSAGE = "address > ";
 }

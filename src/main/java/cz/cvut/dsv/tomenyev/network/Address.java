@@ -6,6 +6,9 @@ import lombok.ToString;
 import org.apache.commons.validator.routines.InetAddressValidator;
 
 import java.io.Serializable;
+import java.net.Inet4Address;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 @Getter
 @ToString
@@ -36,5 +39,24 @@ public class Address implements Serializable {
             throw new Exception();
             //TODO
         }
+    }
+
+    public boolean isGreaterThan(Address addr) throws UnknownHostException {
+        return getIp().equals(addr.getIp()) ? isPortGreaterThan(addr) : isIpGreaterThan(addr);
+    }
+
+    public boolean isIpGreaterThan(Address addr) throws UnknownHostException {
+        byte[] a = InetAddress.getByName(getIp()).getAddress();
+        byte[] b = InetAddress.getByName(addr.getIp()).getAddress();
+        for(int i = 0; i < 4; i++) {
+            if (a[i] == b[i])
+                continue;
+            return a[i] > b[i];
+        }
+        return false;
+    }
+
+    public boolean isPortGreaterThan(Address addr) {
+        return getPort() > addr.getPort();
     }
 }

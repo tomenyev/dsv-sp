@@ -55,6 +55,11 @@ public class Main {
                         case INIT_ELECTION:
                             node.initElection();
                             break;
+                        case JOIN_NETWORK:
+                            System.out.print(Constant.CONSOLE_CURSOR + Constant.JOIN_MESSAGE);
+                            remote = new Address(input.nextLine());
+                            //TODO handle error
+                            node.joinNetwork(remote);
                         case SEND_MESSAGE:
                             System.out.print(Constant.CONSOLE_CURSOR + Constant.ENTER_MESSAGE_CURSOR);
                             node.sendMessage(input.nextLine());

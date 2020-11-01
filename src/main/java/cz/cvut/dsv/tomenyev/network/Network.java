@@ -2,6 +2,7 @@ package cz.cvut.dsv.tomenyev.network;
 
 import com.sun.tools.javac.util.Assert;
 import cz.cvut.dsv.tomenyev.message.AbstractMessage;
+import cz.cvut.dsv.tomenyev.message.Election;
 import cz.cvut.dsv.tomenyev.message.Join;
 import cz.cvut.dsv.tomenyev.utils.Constant;
 import lombok.AccessLevel;
@@ -29,19 +30,19 @@ public class Network {
         return true;
     }
 
-    public boolean election(Node node) {
+    public boolean election(Node node) throws RemoteException, NotBoundException {
         if (node.getNext() == null) {
             //TODO
             node.setLeader(node.getAddress());
         } else {
-           //TODO
+            Election election = new Election(node.getAddress(), node.getNext(), node.getAddress());
+            this.send(node.getNext(), election);
         }
         return true;
     }
 
     public boolean join(Node node, Address remote) throws RemoteException, NotBoundException {
             Join join = new Join(node.getAddress(), remote);
-            node.setNext(remote);
             this.send(remote, join);
             return true;
     }
@@ -49,8 +50,8 @@ public class Network {
         return false;
     }
 
-    public boolean send(Address remote, AbstractMessage message) throws RemoteException, NotBoundException {
-        Registry registry = LocateRegistry.getRegistry(remote.getIp(), remote.getPort());
+    public boolean send(Address destination, AbstractMessage message) throws RemoteException, NotBoundException {
+        Registry registry = LocateRegistry.getRegistry(destination.getIp(), destination.getPort());
         AbstractNode node = (AbstractNode) registry.lookup(Constant.NAME);
         node.handleMessage(message);
         return true;

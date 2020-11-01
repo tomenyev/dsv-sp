@@ -3,6 +3,7 @@ package cz.cvut.dsv.tomenyev.message;
 
 import cz.cvut.dsv.tomenyev.network.Node;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 
 @RequiredArgsConstructor
 public class MessageHandler implements Runnable {
@@ -13,6 +14,7 @@ public class MessageHandler implements Runnable {
 
     private final Runnable onFinished;
 
+    @SneakyThrows
     @Override
     public void run() {
         message.handleMessage(node);
