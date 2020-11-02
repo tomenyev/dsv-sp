@@ -1,9 +1,6 @@
 package cz.cvut.dsv.tomenyev.network;
 
-import com.sun.tools.javac.util.Assert;
-import cz.cvut.dsv.tomenyev.message.AbstractMessage;
-import cz.cvut.dsv.tomenyev.message.Election;
-import cz.cvut.dsv.tomenyev.message.Join;
+import cz.cvut.dsv.tomenyev.message.*;
 import cz.cvut.dsv.tomenyev.utils.Constant;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -12,25 +9,26 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.util.Objects;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class Network {
 
     private static Network instance;
 
-    public boolean init(Node node) {
+    public void init(Node node) {
         try {
             LocateRegistry
                     .createRegistry(node.getAddress().getPort())
                     .rebind(Constant.NAME, node);
         } catch (RemoteException ex) {
             //TODO
-            return false;
+           node.setOk(false);
         }
-        return true;
+        node.setOk(true);
     }
 
-    public boolean election(Node node) throws RemoteException, NotBoundException {
+    public void election(Node node) throws RemoteException, NotBoundException {
         if (node.getNext() == null) {
             //TODO
             node.setLeader(node.getAddress());
@@ -38,28 +36,44 @@ public class Network {
             Election election = new Election(node.getAddress(), node.getNext(), node.getAddress());
             this.send(node.getNext(), election);
         }
-        return true;
     }
 
-    public boolean join(Node node, Address remote) throws RemoteException, NotBoundException {
-            Join join = new Join(node.getAddress(), remote);
-            this.send(remote, join);
-            return true;
-    }
-    public boolean quit(Node node) {
-        return false;
+    public void join(Node node, Address remote) throws RemoteException, NotBoundException {
+        Join join = new Join(node.getAddress(), remote);
+        this.send(remote, join);
     }
 
-    public boolean send(Address destination, AbstractMessage message) throws RemoteException, NotBoundException {
+    public void quit(Node node) throws RemoteException, NotBoundException {
+        if(Objects.isNull(node.getNext())) {
+            //TODO
+            return;
+        }
+        Quit quit = new Quit(
+                node.getAddress(),
+                node.getAddress().equals(node.getLeader()) ? node.getNext() : node.getLeader(),
+                node.getNext()
+        );
+        this.send(node.getAddress().equals(node.getLeader()) ? node.getNext() : node.getLeader(), quit);
+        node.setOk(false);
+    }
+
+    public void send(Address destination, AbstractMessage message) throws RemoteException, NotBoundException {
         Registry registry = LocateRegistry.getRegistry(destination.getIp(), destination.getPort());
         AbstractNode node = (AbstractNode) registry.lookup(Constant.NAME);
         node.handleMessage(message);
-        return true;
     }
 
-    public boolean send(Node origin, String message) {
-        //TODO
-        return true;
+    public void send(Node node, String message) {
+        if(!Objects.isNull(node.getNext())) {
+            Message m = new Message(node.getAddress(), node.getLeader(), message);
+            try {
+                this.send(node.getLeader(), m);
+            } catch (Exception e) {
+                //TODO
+            }
+        } else {
+            //TODO
+        }
     }
 
     public static Network getInstance() {

@@ -6,5 +6,7 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 public interface AbstractNode extends Remote {
+
     void handleMessage(AbstractMessage message) throws RemoteException;
+
 }

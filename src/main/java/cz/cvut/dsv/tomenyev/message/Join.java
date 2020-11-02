@@ -9,7 +9,6 @@ import java.rmi.RemoteException;
 
 public class Join extends AbstractMessage {
 
-
     public Join(Address origin, Address destination) {
         super(origin, destination);
     }

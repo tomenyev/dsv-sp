@@ -3,9 +3,11 @@ package cz.cvut.dsv.tomenyev.utils;
 import cz.cvut.dsv.tomenyev.Main;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 
 public class Log {
 
@@ -13,50 +15,37 @@ public class Log {
 
     private FileOutputStream log;
 
-    private Log(String name) {
-        try {
-            log = new FileOutputStream(name, false);
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(Log.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+    private String path;
 
-    public void print(String to, String text) {
-        switch (to) {
-            case "FILE":
-                text += System.lineSeparator();
-                try {
-                    log.write(text.getBytes());
-                } catch (IOException ex) {
-                    Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            case "CONSOLE":
-                System.out.print(text);
+    private Log(String path) {
+        try {
+            this.path = path;
+            this.log = new FileOutputStream(path, false);
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
         }
     }
 
     public void print(String text) {
             text += System.lineSeparator();
-            System.out.print(text);
             try {
                 log.write(text.getBytes());
             } catch (IOException ex) {
                 Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
             }
-            System.out.print(text);
     }
 
     public void close() {
         try {
             log.close();
         } catch (IOException ex) {
-            Logger.getLogger(Log.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
     }
 
-    public static Log getInstance(String path) {
-        if(instance == null)
-            instance = new Log(path);
+    @SuppressWarnings("UnusedReturnValue")
+    public static Log setInstance(String path) {
+        instance = new Log(path);
         return instance;
     }
 
@@ -64,6 +53,15 @@ public class Log {
         if(instance == null)
             instance = new Log("");
         return instance;
+    }
+
+    public void printLog() {
+        try {
+            Files.readAllLines(Paths.get(path))
+                    .forEach(System.out::println);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
 

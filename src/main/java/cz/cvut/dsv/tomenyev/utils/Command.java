@@ -1,7 +1,6 @@
 package cz.cvut.dsv.tomenyev.utils;
 
 import lombok.RequiredArgsConstructor;
-import lombok.ToString;
 
 @RequiredArgsConstructor
 public enum Command {

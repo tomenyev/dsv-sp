@@ -6,6 +6,7 @@ import cz.cvut.dsv.tomenyev.utils.Command;
 import cz.cvut.dsv.tomenyev.utils.Constant;
 import cz.cvut.dsv.tomenyev.utils.Log;
 
+import java.util.Objects;
 import java.util.Scanner;
 
 public class Main {
@@ -18,11 +19,10 @@ public class Main {
 
         Address origin = null, remote = null;
         Scanner input = null;
-        Log log = null;
 
         try {
             input = new Scanner(System.in);
-            log = Log.getInstance(args[args.length == 2 ? 1 : 2]);
+            Log.setInstance(args[args.length == 2 ? 1 : 2]);
             origin = new Address(args[0]);
             if(args.length != 2)
                 remote = new Address(args[1]);
@@ -32,36 +32,32 @@ public class Main {
         }
 
         try {
-            System.setProperty("java.rmi.server.hostname",origin.getIp());
+            System.setProperty("java.rmi.server.hostname", Objects.requireNonNull(origin).getIp());
 
-            Node node = new Node(origin, log);
+            Node node = new Node(origin);
 
             if(node.initNetwork().isOk()) {
-                if (remote != null) {
+                if (remote != null)
                     node.joinNetwork(remote);
-                }
 
                 while(!Thread.interrupted() && node.isOk()) {
-
-                    System.out.print(Constant.CONSOLE_CURSOR);
-
-                    switch (Command.convert(input.nextLine())) {
+                    switch (Command.convert(next(input))) {
                         case PRINT_STATUS:
                             System.out.println(node.toString());
                             break;
                         case PRINT_LOG:
-                            node.printLog();
+                            Log.getInstance().printLog();
                             break;
                         case INIT_ELECTION:
                             node.initElection();
                             break;
                         case JOIN_NETWORK:
-                            System.out.print(Constant.CONSOLE_CURSOR + Constant.JOIN_MESSAGE);
+                            System.out.print(Constant.JOIN_MESSAGE);
                             remote = new Address(input.nextLine());
-                            //TODO handle error
                             node.joinNetwork(remote);
+                            break;
                         case SEND_MESSAGE:
-                            System.out.print(Constant.CONSOLE_CURSOR + Constant.ENTER_MESSAGE_CURSOR);
+                            System.out.print(Constant.ENTER_MESSAGE_CURSOR);
                             node.sendMessage(input.nextLine());
                             break;
                         case QUIT:
@@ -93,4 +89,13 @@ public class Main {
         Log.getInstance().close();
         System.exit(0);
     }
+
+    private static String next(Scanner input) {
+        if (input.hasNext())
+            return input.nextLine();
+        exit();
+        return "";
+    }
+
+
 }

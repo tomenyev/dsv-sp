@@ -4,24 +4,25 @@ import cz.cvut.dsv.tomenyev.message.AbstractMessage;
 import cz.cvut.dsv.tomenyev.message.Join;
 import cz.cvut.dsv.tomenyev.message.MessageHandler;
 import cz.cvut.dsv.tomenyev.utils.Log;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.rmi.NotBoundException;
-import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 
+@SuppressWarnings("UnusedReturnValue")
 @Getter
 @Setter
 @ToString(of = {"address", "next", "leader", "ok", "fixing", "income", "outcome"})
-
 public class Node extends UnicastRemoteObject implements AbstractNode {
 
     private final Address address;
-
-    private final Log logger;
 
     private Address next;
 
@@ -31,50 +32,43 @@ public class Node extends UnicastRemoteObject implements AbstractNode {
 
     private boolean fixing = false;
 
-    private final Network network = Network.getInstance();
+    private List<String> messages = new ArrayList<>();
 
     private Queue<Join> income = new LinkedList<>();
 
     private Queue<Join> outcome = new LinkedList<>();
 
-    public Node(Address address, Log logger) throws RemoteException {
+    public Node(Address address) throws RemoteException {
         this.address = address;
-        this.logger = logger;
     }
 
-    public Node initNetwork() {
-        this.setOk(network.init(this));
+    public Node initNetwork() throws RemoteException, NotBoundException {
+        Network.getInstance().init(this);
         return this;
     }
 
     public Node joinNetwork(Address remote) throws RemoteException, NotBoundException {
-        this.setOk(network.join(this, remote));
+        Network.getInstance().join(this, remote);
         return this;
     }
 
     public Node initElection() throws RemoteException, NotBoundException {
-        this.setOk(network.election(this));
+        Network.getInstance().election(this);
         return this;
     }
 
     public Node sendMessage(String message) {
-        System.out.println(message);
-        this.setOk(network.send(this, message));
+        Network.getInstance().send(this, message);
         return this;
     }
 
-    public void quitNetwork() {
-        this.setOk(network.quit(this));
+    public void quitNetwork() throws RemoteException, NotBoundException {
+        Network.getInstance().quit(this);
     }
 
     public void forceQuitNetwork() {
         this.setOk(false);
     }
-
-    public void printLog() {
-        //TODO
-    }
-
 
     @Override
     public void handleMessage(AbstractMessage message) throws RemoteException {

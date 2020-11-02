@@ -6,7 +6,6 @@ import lombok.ToString;
 import org.apache.commons.validator.routines.InetAddressValidator;
 
 import java.io.Serializable;
-import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
@@ -16,6 +15,7 @@ import java.net.UnknownHostException;
 public class Address implements Serializable {
 
     private final String ip;
+
     private final short port;
 
     public Address(String address) throws Exception {
@@ -59,4 +59,5 @@ public class Address implements Serializable {
     public boolean isPortGreaterThan(Address addr) {
         return getPort() > addr.getPort();
     }
+
 }

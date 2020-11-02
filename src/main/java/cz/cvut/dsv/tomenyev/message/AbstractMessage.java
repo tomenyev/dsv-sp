@@ -2,7 +2,6 @@ package cz.cvut.dsv.tomenyev.message;
 
 import cz.cvut.dsv.tomenyev.network.Address;
 import cz.cvut.dsv.tomenyev.network.Node;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -10,7 +9,6 @@ import java.io.Serializable;
 import java.net.UnknownHostException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
-import java.sql.Time;
 
 @RequiredArgsConstructor
 @Getter
