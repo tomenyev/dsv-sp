@@ -1,7 +1,7 @@
 package cz.cvut.dsv.tomenyev.network;
 
 import cz.cvut.dsv.tomenyev.message.*;
-import cz.cvut.dsv.tomenyev.utils.Counter;
+import cz.cvut.dsv.tomenyev.utils.Constant;
 import cz.cvut.dsv.tomenyev.utils.Log;
 import lombok.Getter;
 import lombok.Setter;
@@ -40,11 +40,11 @@ public class Node extends UnicastRemoteObject implements AbstractNode {
     }
 
     public Node initNetwork() {
-        Log.getInstance().print(Log.To.BOTH, "Initializing new network("+getAddress()+")");
+        Log.getInstance().print(Log.To.BOTH, "Node " +getAddress() +" is TRYING to INITIALIZE network");
         try {
             Network.getInstance().init(this);
         } catch (Exception e) {
-           Log.getInstance().print(Log.To.BOTH, "Failed to initialize new network("+getAddress()+")");
+           Log.getInstance().print(Log.To.BOTH, "Node " +getAddress() +" has FAILED to INITIALIZE network");
            this.setOk(false);
 //           e.printStackTrace();
         }
@@ -52,67 +52,72 @@ public class Node extends UnicastRemoteObject implements AbstractNode {
     }
 
     public Node joinNetwork(Address remote) {
-        Log.getInstance().print(Log.To.BOTH, "Trying to join existing network("+remote+")");
+        Log.getInstance().print(Log.To.BOTH, "Node " + getAddress()+" is TRYING to JOIN the network("+remote+")");
         try {
             Network.getInstance().join(this, remote);
         } catch (Exception e) {
-            Log.getInstance().print(Log.To.BOTH, "Failed to join existing network("+remote+")");
+            Log.getInstance().print(Log.To.BOTH, "Node " + getAddress()+" has FAILED to JOIN the network("+remote+")");
 //            e.printStackTrace();
         }
         return this;
     }
 
     public Node initElection() {
-        Log.getInstance().print(Log.To.BOTH, "Initializing leader election("+getAddress()+").");
+        Log.getInstance().print(Log.To.BOTH, "Node " +getAddress() +" is TRYING to INITIALIZE LEADER ELECTION");
         try {
             Network.getInstance().election(this);
         } catch (Exception e) {
-            Log.getInstance().print(Log.To.BOTH, "Failed to initialize leader election("+getAddress()+").");
+            Log.getInstance().print(Log.To.BOTH, "Node " + getAddress() + " has FAILED to INITIALIZE LEADER ELECTION");
 //            e.printStackTrace();
         }
         return this;
     }
 
     public Node sendMessage(String message) {
-        Log.getInstance().print(Log.To.BOTH, "Node "+getAddress()+" is trying to send message: "+message);
+        Log.getInstance().print(Log.To.BOTH, "Node "+getAddress()+" has SENT the TEXT message: " + message);
+
         try {
             Network.getInstance().send(this, message);
         } catch (Exception e) {
-            Log.getInstance().print(Log.To.BOTH, "Node "+getAddress()+" has failed to send message: "+message);
+            Log.getInstance().print(Log.To.BOTH, "Node "+getAddress()+" has FAILED to SEND the TEXT message: " + message);
 //            e.printStackTrace();
         }
         return this;
     }
 
     public void quitNetwork() {
-        Log.getInstance().print(Log.To.BOTH, "Node " + getAddress() + " is trying to safety quit network");
+        boolean success;
+        Log.getInstance().print(Log.To.BOTH, "Node " + getAddress() + " is TRYING to SAFETY QUIT the network");
         try {
+            success = true;
             Network.getInstance().quit(this);
         } catch (Exception e) {
-            Log.getInstance().print(Log.To.BOTH, "Node " + getAddress() + " has failed to quit network");
+            success = false;
+            Log.getInstance().print(Log.To.BOTH, "Node " + getAddress() + " has FAILED to SAFETY QUIT the network");
 //            e.printStackTrace();
         }
+        if(success)
+            Log.getInstance().print(Log.To.CONSOLE, Constant.QUIT_MESSAGE);
     }
 
     public void fixNetwork(Address quit) {
-        Log.getInstance().print(Log.To.BOTH, "Node "+quit+" has left network.\nNode " + getAddress() + " is trying fix network");
+        Log.getInstance().print(Log.To.BOTH, "Node " + getAddress() + " is TRYING to FIX the network");
         try {
             Network.getInstance().fix(this, quit);
         } catch (Exception e) {
-            Log.getInstance().print(Log.To.BOTH, "Node " + getAddress() + " has failed to fix network("+quit+")");
+            Log.getInstance().print(Log.To.BOTH, "Node " + getAddress() + " has FAILED to FIX the network");
 //            e.printStackTrace();
         }
     }
 
     public void forceQuitNetwork() {
-        Log.getInstance().print(Log.To.BOTH, "Node " + getAddress() + " has forcibly quit network");
-        this.setOk(false);
+        Log.getInstance().print(Log.To.BOTH, "Node " + getAddress() + " has FORCIBLY QUIT the network");
+        setOk(false);
     }
 
     @Override
     public void handleMessage(AbstractMessage message) throws RemoteException {
-        Counter.setInstance(message.getI());
-        Log.getInstance().print(Log.To.BOTH, Counter.getInstance().inc(), getAddress() + " has RECEIVED message: \n\t "+message);
+        Log.getInstance().print(Log.To.BOTH, "Node "+getAddress() + " has RECEIVED the message: \n\t "+message);
 
         MessageHandler runnable;
 
@@ -121,7 +126,7 @@ public class Node extends UnicastRemoteObject implements AbstractNode {
                 runnable = new MessageHandler(message, this, () -> Network.getInstance().handleFails(this));
             } else {
                 this.addInbox(message);
-                Log.getInstance().print(Log.To.BOTH, "Node " + getAddress() + " is fixing and can't handle message: "+message);
+                Log.getInstance().print(Log.To.BOTH, "Node " + getAddress() + " is FIXING and can't handle the message:\n\t"+message);
                 return;
             }
         } else {
@@ -132,19 +137,21 @@ public class Node extends UnicastRemoteObject implements AbstractNode {
     }
 
     public void addDraft(AbstractMessage message) {
+        if(message instanceof Join)
+            return;
         if(Objects.nonNull(this.getNext()) && Objects.nonNull(this.getPrev()) && !this.getNext().equals(getPrev())) {
             this.drafts.add(message);
-            Log.getInstance().print(Log.To.BOTH, "Node " + getAddress() + " has saved message to the drafts("+message+")");
+            Log.getInstance().print(Log.To.BOTH, "Node " + getAddress() + " has SAVED message to the DRAFTS"+"\n\t"+message);
         }
     }
 
     public void addInbox(AbstractMessage message) {
-        Log.getInstance().print(Log.To.BOTH, "Node " + getAddress() + " has saved message to the inbox("+message+")");
+        Log.getInstance().print(Log.To.BOTH, "Node " + getAddress() + " has SAVED message to the INBOX"+"\n\t"+message);
         this.inbox.add(message);
     }
 
     public void addMessage(String str) {
-        Log.getInstance().print(Log.To.FILE, "Node " + getAddress() + " has received new regular message("+str+")");
+        Log.getInstance().print(Log.To.BOTH, getAddress() + " > message > " + str);
         this.messages.add(str);
     }
 

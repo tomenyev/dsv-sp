@@ -22,7 +22,7 @@ public class Election extends AbstractMessage {
     }
 
     @Override
-    public void handleMessage(Node node) throws RemoteException, NotBoundException, UnknownHostException {
+    public void handleMessage(Node node) throws Exception {
         if(node.getAddress().equals(getCandidate())) {
             node.setLeader(node.getAddress());
             return;

@@ -1,10 +1,23 @@
-[14:51.427] Initializing new network(Address(ip=127.0.0.1, port=8100)).
-[14:51.441] Trying to join existing network(Address(ip=127.0.0.1, port=8080)).
-[1][14:51.444] Address(ip=127.0.0.1, port=8100) has SEND message: 
+[50:14.082] Node Address(ip=127.0.0.1, port=8100) is TRYING to INITIALIZE network.
+[50:14.095] Node Address(ip=127.0.0.1, port=8100) has INITIALIZED network.
+[50:14.095] Node Address(ip=127.0.0.1, port=8100) is TRYING to JOIN the network(Address(ip=127.0.0.1, port=8080)).
+[50:14.096] Address(ip=127.0.0.1, port=8100) has SENT the message: 
 	 Join{origin=Address(ip=127.0.0.1, port=8100) destination=Address(ip=127.0.0.1, port=8080) sendBy=Address(ip=127.0.0.1, port=8100)}.
-[6][14:51.540] Address(ip=127.0.0.1, port=8100) has RECEIVED message: 
+[50:14.209] Node Address(ip=127.0.0.1, port=8100) has RECEIVED the message: 
 	 Join{origin=Address(ip=127.0.0.1, port=8100) destination=Address(ip=127.0.0.1, port=8080) sendBy=Address(ip=127.0.0.1, port=8090)}.
-[7][14:51.542] Address(ip=127.0.0.1, port=8100) has SEND message: 
+[50:14.211] Address(ip=127.0.0.1, port=8100) has SENT the message: 
 	 Election{origin=Address(ip=127.0.0.1, port=8100) destination=Address(ip=127.0.0.1, port=8080) candidate=Address(ip=127.0.0.1, port=8100)}.
-[12][14:51.552] Address(ip=127.0.0.1, port=8100) has RECEIVED message: 
+[50:14.220] Node Address(ip=127.0.0.1, port=8100) has RECEIVED the message: 
 	 Election{origin=Address(ip=127.0.0.1, port=8100) destination=Address(ip=127.0.0.1, port=8080) candidate=Address(ip=127.0.0.1, port=8100)}.
+[50:23.048] Node Address(ip=127.0.0.1, port=8100) has RECEIVED the message: 
+	 Join{origin=Address(ip=127.0.0.1, port=8110) destination=Address(ip=127.0.0.1, port=8080) sendBy=Address(ip=127.0.0.1, port=8080)}.
+[50:23.049] Address(ip=127.0.0.1, port=8100) has SENT the message: 
+	 Join{origin=Address(ip=127.0.0.1, port=8110) destination=Address(ip=127.0.0.1, port=8080) sendBy=Address(ip=127.0.0.1, port=8100)}.
+[50:23.076] Node Address(ip=127.0.0.1, port=8100) has RECEIVED the message: 
+	 Election{origin=Address(ip=127.0.0.1, port=8110) destination=Address(ip=127.0.0.1, port=8080) candidate=Address(ip=127.0.0.1, port=8110)}.
+[50:23.078] Address(ip=127.0.0.1, port=8100) has SENT the message: 
+	 Election{origin=Address(ip=127.0.0.1, port=8110) destination=Address(ip=127.0.0.1, port=8080) candidate=Address(ip=127.0.0.1, port=8110)}.
+[50:58.999] Node Address(ip=127.0.0.1, port=8100) has RECEIVED the message: 
+	 Election{origin=Address(ip=127.0.0.1, port=8120) destination=Address(ip=127.0.0.1, port=8080) candidate=Address(ip=127.0.0.1, port=8120)}.
+[50:58.999] Address(ip=127.0.0.1, port=8100) has SENT the message: 
+	 Election{origin=Address(ip=127.0.0.1, port=8120) destination=Address(ip=127.0.0.1, port=8080) candidate=Address(ip=127.0.0.1, port=8120)}.

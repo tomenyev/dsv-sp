@@ -65,7 +65,6 @@ public class Main {
                             break;
                         case QUIT:
                             node.quitNetwork();
-                            Log.getInstance().print(Log.To.CONSOLE, Constant.QUIT_MESSAGE);
                             break;
                         case FORCE_QUIT:
                             node.forceQuitNetwork();
@@ -83,6 +82,7 @@ public class Main {
                                 break;
                             }
                             node.fixNetwork(fix);
+                            break;
                         default:
                             Log.getInstance().print(Log.To.CONSOLE,Constant.COMMAND_NOT_FOUND);
                             break;
@@ -91,7 +91,7 @@ public class Main {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
 
         exit();

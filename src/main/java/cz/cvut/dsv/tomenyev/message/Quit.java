@@ -6,6 +6,7 @@ import cz.cvut.dsv.tomenyev.network.Node;
 import cz.cvut.dsv.tomenyev.utils.Constant;
 import javafx.util.Pair;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 import sun.nio.ch.Net;
 
@@ -16,20 +17,29 @@ import java.util.Objects;
 
 @ToString
 @Getter
+@Setter
 public class Quit extends AbstractMessage {
 
-    private final Address next;
+    private Address next;
 
-    private final Address prev;
+    private Address prev;
 
-    public Quit(Address origin, Address destination, Address next, Address prev) {
+    private Address newDestination;
+
+    public Quit(Address origin, Address destination, Address next, Address prev, Address newDestination) {
         super(origin, destination);
         this.next = next;
         this.prev = prev;
+        this.newDestination = newDestination;
     }
 
     @Override
-    public void handleMessage(Node node) throws RemoteException, NotBoundException, UnknownHostException {
+    public void handleMessage(Node node) throws Exception {
+
+        if(node.getAddress().equals(getOrigin())) {
+            node.clear();
+            return;
+        }
 
         if(node.getPrev().equals(getOrigin()))
             node.setPrev(getPrev().equals(node.getAddress()) ? null : getPrev());
@@ -37,7 +47,7 @@ public class Quit extends AbstractMessage {
         if(node.getNext().equals(getOrigin()))
             node.setNext(getNext().equals(node.getAddress()) ? null : getNext());
 
-        if(Objects.isNull(node.getNext()) || node.getNext().equals(getDestination())) {
+        if(Objects.isNull(node.getNext()) || node.getNext().equals(getNewDestination())) {
             if(Constant.AUTOPILOT)
                 Network.getInstance().election(node);
             return;

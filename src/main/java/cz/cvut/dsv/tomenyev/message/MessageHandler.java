@@ -14,10 +14,13 @@ public class MessageHandler implements Runnable {
     private final Runnable finished;
 
 
-    @SneakyThrows
     @Override
     public void run() {
-        message.handleMessage(node);
+        try {
+            message.handleMessage(node);
+        } catch (Exception ignored) {
+
+        }
         if(finished != null)
             finished.run();
     }

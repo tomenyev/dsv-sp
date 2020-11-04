@@ -23,8 +23,7 @@ public class Join extends AbstractMessage {
     }
 
     @Override
-    public void handleMessage(Node node) throws RemoteException, NotBoundException {
-
+    public void handleMessage(Node node) throws Exception {
         if(node.getAddress().equals(getOrigin())) {
             node.setNext(getDestination());
             node.setPrev(getSendBy());

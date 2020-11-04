@@ -2,15 +2,11 @@ package cz.cvut.dsv.tomenyev.utils;
 
 public class Constant {
 
-    public static final String LOGGING_FOLDER_PATH = "logging/";
-
     public final static String NAME = "CHAT";
 
     public static final String ARGS_HELP = "";
 
     public static final String CHAT_HELP = "";
-
-    public static final String CONSOLE_CURSOR = "chat > ";
 
     public static final String ENTER_MESSAGE_CURSOR = "message > ";
 

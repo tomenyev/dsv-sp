@@ -1,18 +1,45 @@
-[14:40.898] Initializing new network(Address(ip=127.0.0.1, port=8090)).
-[14:40.931] Trying to join existing network(Address(ip=127.0.0.1, port=8080)).
-[1][14:40.933] Address(ip=127.0.0.1, port=8090) has SEND message: 
+[50:09.715] Node Address(ip=127.0.0.1, port=8090) is TRYING to INITIALIZE network.
+[50:09.726] Node Address(ip=127.0.0.1, port=8090) has INITIALIZED network.
+[50:09.726] Node Address(ip=127.0.0.1, port=8090) is TRYING to JOIN the network(Address(ip=127.0.0.1, port=8080)).
+[50:09.727] Address(ip=127.0.0.1, port=8090) has SENT the message: 
 	 Join{origin=Address(ip=127.0.0.1, port=8090) destination=Address(ip=127.0.0.1, port=8080) sendBy=Address(ip=127.0.0.1, port=8090)}.
-[4][14:41.125] Address(ip=127.0.0.1, port=8090) has RECEIVED message: 
+[50:09.878] Node Address(ip=127.0.0.1, port=8090) has RECEIVED the message: 
 	 Join{origin=Address(ip=127.0.0.1, port=8090) destination=Address(ip=127.0.0.1, port=8080) sendBy=Address(ip=127.0.0.1, port=8080)}.
-[5][14:41.127] Address(ip=127.0.0.1, port=8090) has SEND message: 
+[50:09.879] Address(ip=127.0.0.1, port=8090) has SENT the message: 
 	 Election{origin=Address(ip=127.0.0.1, port=8090) destination=Address(ip=127.0.0.1, port=8080) candidate=Address(ip=127.0.0.1, port=8090)}.
-[8][14:41.139] Address(ip=127.0.0.1, port=8090) has RECEIVED message: 
+[50:09.887] Node Address(ip=127.0.0.1, port=8090) has RECEIVED the message: 
 	 Election{origin=Address(ip=127.0.0.1, port=8090) destination=Address(ip=127.0.0.1, port=8080) candidate=Address(ip=127.0.0.1, port=8090)}.
-[4][14:51.529] Address(ip=127.0.0.1, port=8090) has RECEIVED message: 
+[50:14.197] Node Address(ip=127.0.0.1, port=8090) has RECEIVED the message: 
 	 Join{origin=Address(ip=127.0.0.1, port=8100) destination=Address(ip=127.0.0.1, port=8080) sendBy=Address(ip=127.0.0.1, port=8080)}.
-[5][14:51.529] Address(ip=127.0.0.1, port=8090) has SEND message: 
+[50:14.198] Address(ip=127.0.0.1, port=8090) has SENT the message: 
 	 Join{origin=Address(ip=127.0.0.1, port=8100) destination=Address(ip=127.0.0.1, port=8080) sendBy=Address(ip=127.0.0.1, port=8090)}.
-[10][14:51.548] Address(ip=127.0.0.1, port=8090) has RECEIVED message: 
+[50:14.217] Node Address(ip=127.0.0.1, port=8090) has RECEIVED the message: 
 	 Election{origin=Address(ip=127.0.0.1, port=8100) destination=Address(ip=127.0.0.1, port=8080) candidate=Address(ip=127.0.0.1, port=8100)}.
-[11][14:51.549] Address(ip=127.0.0.1, port=8090) has SEND message: 
+[50:14.218] Address(ip=127.0.0.1, port=8090) has SENT the message: 
 	 Election{origin=Address(ip=127.0.0.1, port=8100) destination=Address(ip=127.0.0.1, port=8080) candidate=Address(ip=127.0.0.1, port=8100)}.
+[50:23.070] Node Address(ip=127.0.0.1, port=8090) has RECEIVED the message: 
+	 Election{origin=Address(ip=127.0.0.1, port=8110) destination=Address(ip=127.0.0.1, port=8080) candidate=Address(ip=127.0.0.1, port=8110)}.
+[50:23.072] Address(ip=127.0.0.1, port=8090) has SENT the message: 
+	 Election{origin=Address(ip=127.0.0.1, port=8110) destination=Address(ip=127.0.0.1, port=8080) candidate=Address(ip=127.0.0.1, port=8110)}.
+[50:58.995] Node Address(ip=127.0.0.1, port=8090) has RECEIVED the message: 
+	 Election{origin=Address(ip=127.0.0.1, port=8120) destination=Address(ip=127.0.0.1, port=8080) candidate=Address(ip=127.0.0.1, port=8120)}.
+[50:58.995] Address(ip=127.0.0.1, port=8090) has SENT the message: 
+	 Election{origin=Address(ip=127.0.0.1, port=8120) destination=Address(ip=127.0.0.1, port=8080) candidate=Address(ip=127.0.0.1, port=8120)}.
+[51:35.944] Node Address(ip=127.0.0.1, port=8090) has RECEIVED the message: 
+	 Fix{origin=Address(ip=127.0.0.1, port=8080) destination=Address(ip=127.0.0.1, port=8130) quit=Address(ip=127.0.0.1, port=8120)}.
+[51:35.946] Address(ip=127.0.0.1, port=8090) has SENT the message: 
+	 Fix{origin=Address(ip=127.0.0.1, port=8080) destination=Address(ip=127.0.0.1, port=8130) quit=Address(ip=127.0.0.1, port=8120)}.
+[51:35.952] Address(ip=127.0.0.1, port=8090) has FAILED to SEND the message: 
+	 Fix{origin=Address(ip=127.0.0.1, port=8080) destination=Address(ip=127.0.0.1, port=8130) quit=Address(ip=127.0.0.1, port=8120)}.
+[51:35.953] Node Address(ip=127.0.0.1, port=8090) has SAVED message to the DRAFTS
+	Fix{origin=Address(ip=127.0.0.1, port=8080) destination=Address(ip=127.0.0.1, port=8130) quit=Address(ip=127.0.0.1, port=8120)}.
+[51:35.953] Node Address(ip=127.0.0.1, port=8090) is TRYING to FIX the network.
+[51:35.954] Address(ip=127.0.0.1, port=8090) has SENT the message: 
+	 Fix{origin=Address(ip=127.0.0.1, port=8090) destination=Address(ip=127.0.0.1, port=8080) quit=Address(ip=127.0.0.1, port=8100)}.
+[51:35.974] Node Address(ip=127.0.0.1, port=8090) has RECEIVED the message: 
+	 Fix{origin=Address(ip=127.0.0.1, port=8090) destination=Address(ip=127.0.0.1, port=8080) quit=Address(ip=127.0.0.1, port=8100)}.
+[51:35.976] Address(ip=127.0.0.1, port=8090) has SENT the message: 
+	 Fix{origin=Address(ip=127.0.0.1, port=8090) destination=Address(ip=127.0.0.1, port=8080) quit=Address(ip=127.0.0.1, port=8100)}.
+[51:35.984] Node Address(ip=127.0.0.1, port=8090) is TRYING to HANDLE DRAFTS and INBOX.
+[51:35.986] Address(ip=127.0.0.1, port=8090) has SENT the message: 
+	 Fix{origin=Address(ip=127.0.0.1, port=8080) destination=Address(ip=127.0.0.1, port=8130) quit=Address(ip=127.0.0.1, port=8120)}.

@@ -34,42 +34,7 @@ public class Log {
     }
 
     public void print(To to, String text) {
-        SimpleDateFormat sdf = new SimpleDateFormat("mm:ss.SSS");
-        Date now = new Date();
-        String strTime = sdf.format(now);
-        String start ="[" + strTime + "] ";
-        String end = ".";
-        switch (to) {
-            case FILE:
-                text = start + text + end;
-                text += System.lineSeparator();
-                try {
-                    log.write(text.getBytes());
-                } catch (IOException ex) {
-                    Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                break;
-            case CONSOLE:
-                System.out.println(start + text + end);
-                break;
-            case BOTH:
-                text = start + text + end;
-                text += System.lineSeparator();
-                try {
-                    log.write(text.getBytes());
-                } catch (IOException ex) {
-                    Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                System.out.print(text);
-                break;
-        }
-    }
-
-    public void print(To to, Integer i, String text) {
-        SimpleDateFormat sdf = new SimpleDateFormat("mm:ss.SSS");
-        Date now = new Date();
-        String strTime = sdf.format(now);
-        String start ="["+i+"][" + strTime + "] ";
+        String start ="[" + new SimpleDateFormat("mm:ss.SSS").format(new Date()) + "] ";
         String end = ".";
         switch (to) {
             case FILE:

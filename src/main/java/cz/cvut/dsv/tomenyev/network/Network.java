@@ -1,8 +1,8 @@
 package cz.cvut.dsv.tomenyev.network;
 
+import com.sun.xml.internal.ws.api.message.ExceptionHasMessage;
 import cz.cvut.dsv.tomenyev.message.*;
 import cz.cvut.dsv.tomenyev.utils.Constant;
-import cz.cvut.dsv.tomenyev.utils.Counter;
 import cz.cvut.dsv.tomenyev.utils.Log;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -19,14 +19,20 @@ public class Network {
 
     private static Network instance;
 
-    public void init(Node node) throws RemoteException {
-        LocateRegistry
-                .createRegistry(node.getAddress().getPort())
-                .rebind(Constant.NAME, node);
-        node.setOk(true);
+    public void init(Node node) throws Exception {
+        try {
+            LocateRegistry
+                    .createRegistry(node.getAddress().getPort())
+                    .rebind(Constant.NAME, node);
+            node.setOk(true);
+        } catch (Exception e) {
+            node.setOk(false);
+            throw new Exception();
+        }
+        Log.getInstance().print(Log.To.BOTH, "Node " +node.getAddress() +" has INITIALIZED network");
     }
 
-    public Network election(Node node) throws RemoteException, NotBoundException {
+    public Network election(Node node) throws Exception {
         if (node.getNext() == null) {
             Log.getInstance().print(Log.To.BOTH, "Node "+node.getAddress()+" is single");
             node.setLeader(node.getAddress());
@@ -37,13 +43,13 @@ public class Network {
         return this;
     }
 
-    public Network join(Node node, Address remote) throws RemoteException, NotBoundException {
+    public Network join(Node node, Address remote) throws Exception {
         Join join = new Join(node.getAddress(), remote, node.getAddress());
         this.send(node, remote, join);
         return this;
     }
 
-    public Network quit(Node node) throws RemoteException, NotBoundException {
+    public Network quit(Node node) throws Exception {
         if(Objects.isNull(node.getNext())) {
             Log.getInstance().print(Log.To.BOTH, "Node "+node.getAddress()+" is single");
             node.clear();
@@ -53,31 +59,72 @@ public class Network {
                 node.getAddress(),
                 node.getAddress().equals(node.getLeader()) ? node.getNext() : node.getLeader(),
                 node.getNext(),
-                node.getPrev()
+                node.getPrev(),
+                node.getAddress().equals(node.getLeader()) ? node.getNext() : node.getLeader()
         );
         this.send(node, node.getAddress().equals(node.getLeader()) ? node.getNext() : node.getLeader(), quit);
         node.clear();
         return this;
     }
 
-    public Network send(Node origin, Address destination, AbstractMessage message) throws RemoteException, NotBoundException {
-        message.setI(Counter.getInstance().inc());
-        Log.getInstance().print(Log.To.BOTH, Counter.getInstance().getI(), origin.getAddress() + " has SEND message: \n\t "+message);
-
+    public Network send(Node origin, Address destination, AbstractMessage message) throws Exception {
+        Log.getInstance().print(Log.To.BOTH, origin.getAddress() + " has SENT the message: \n\t "+message);
         try {
             Registry registry = LocateRegistry.getRegistry(destination.getIp(), destination.getPort());
             AbstractNode node = (AbstractNode) registry.lookup(Constant.NAME);
             node.handleMessage(message);
         } catch (Exception e) {
+//            e.printStackTrace();
+            if(!checkConnect(origin, destination))
+                origin.clear();
+
+
+            Log.getInstance().print(Log.To.BOTH, origin.getAddress() + " has FAILED to SEND the message: \n\t "+message);
             origin.addDraft(message);
             if(Constant.AUTOPILOT)
                 origin.fixNetwork(destination);
+            throw new Exception();
         }
         return this;
     }
 
-    public Network send(Node node, String message) throws RemoteException, NotBoundException {
-        if(!Objects.isNull(node.getNext())) {
+    private boolean checkConnect(Node origin, Address destination) {
+        Address check1 = origin.getNext();
+        Address check2 = origin.getPrev();
+
+        if(Objects.isNull(check1) && Objects.isNull(check2))
+            return false;
+
+        if (check1.equals(destination) && check2.equals(check1))
+            return false;
+
+        if(check1.equals(destination)) {
+            boolean ok = false;
+            try {
+                Registry registry = LocateRegistry.getRegistry(check2.getIp(), check2.getPort());
+                AbstractNode n = (AbstractNode) registry.lookup(Constant.NAME);
+                ok = true;
+            } catch (Exception ignored) {}
+            if (ok) return true;
+        }
+
+        if(check2.equals(destination)) {
+            boolean ok = false;
+            try {
+                Registry registry = LocateRegistry.getRegistry(check1.getIp(), check1.getPort());
+                AbstractNode n = (AbstractNode) registry.lookup(Constant.NAME);
+                ok = true;
+            } catch (Exception e) {
+                return false;
+            }
+            if(ok) return true;
+        }
+
+        return true;
+    }
+
+    public Network send(Node node, String message) throws Exception {
+        if(Objects.nonNull(node.getNext())) {
             Message m = new Message(node.getAddress(), node.getLeader(), message);
             this.send(node, node.getLeader(), m);
         } else {
@@ -86,36 +133,52 @@ public class Network {
         return this;
     }
 
-    public Network fix(Node node, Address quit) throws RemoteException, NotBoundException {
+    public Network fix(Node node, Address quit) throws Exception {
+
         if(quit.equals(node.getPrev()) && quit.equals(node.getNext()) || Objects.isNull(node.getNext()) || Objects.isNull(node.getPrev())) {
             Log.getInstance().print(Log.To.BOTH, "Node " + node.getAddress() + " is single");
-            node.clear().setFixing(false);
+            node.clear();
             return this;
         }
 
         node.setFixing(true);
 
-        //TODO handle error
         try {
-            Fix fix = new Fix(node.getAddress(), node.getPrev(), quit, node.getAddress());
+            Address sendTo = node.getPrev().equals(quit) ? node.getNext() : node.getPrev();
+            Fix fix = new Fix(node.getAddress(), sendTo, quit, node.getAddress(), node.getPrev().equals(quit));
             node.setLeader(node.getAddress());
-            this.send(node, node.getPrev(), fix);
+            this.send(node, sendTo, fix);
         } catch (Exception e) {
             node.clear().setFixing(false);
+            throw new Exception();
         }
 
         return this;
     }
 
     public Network handleFails(Node node) {
+        boolean quit = false;
+        Log.getInstance().print(Log.To.BOTH, "Node " + node.getAddress() + " is TRYING to HANDLE DRAFTS and INBOX");
         node.setFixing(false);
         if(Objects.nonNull(node.getNext())) {
             try {
                 while(!node.getDrafts().isEmpty()) {
                     AbstractMessage message = node.getDrafts().remove();
                     if(message instanceof Message) {
-                        ((Message) message).setNewDestination(node.getLeader());
-                        this.send(node, node.getLeader(), message);
+                        Message m = (Message) message;
+                        m.setNewDestination(node.getLeader());
+                        this.send(node, node.getLeader(), m);
+                    } else if (message instanceof  Quit) {
+                        quit = true;
+                        Quit q = (Quit) message;
+                        if(!(q.getDestination().equals(node.getLeader()) || q.getDestination().equals(node.getNext()))) {
+                            q.setNewDestination(node.getAddress().equals(node.getLeader()) ? node.getNext() : node.getLeader());
+                            q.setNext(node.getNext());
+                            q.setPrev(node.getPrev());
+                        }
+                        this.send(node, q.getNewDestination(), q);
+                    } else if(message instanceof Join) {
+                        this.send(node, node.getAddress(), message);
                     } else {
                         this.send(node, node.getNext(), message);
                     }
@@ -125,8 +188,13 @@ public class Network {
                     node.handleMessage(message);
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+//                e.printStackTrace();
+                  Log.getInstance().print(Log.To.BOTH, "Node " + node.getAddress() + " has FAILED to HANDLE DRAFTS and INBOX");
             }
+        }
+        if(quit) {
+            node.clear();
+            Log.getInstance().print(Log.To.CONSOLE, Constant.QUIT_MESSAGE);
         }
         return this;
     }

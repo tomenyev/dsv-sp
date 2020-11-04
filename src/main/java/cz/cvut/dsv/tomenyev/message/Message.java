@@ -29,12 +29,11 @@ public class Message extends AbstractMessage {
     }
 
     @Override
-    public void handleMessage(Node node) throws RemoteException, NotBoundException, UnknownHostException {
+    public void handleMessage(Node node) throws Exception {
 
-        if(!node.getAddress().equals(getOrigin())) {
-            System.out.println(getOrigin() + " > " + getMessage());
-            node.addMessage(getOrigin() + " > " + getMessage());
-        }
+        if(!node.getAddress().equals(getOrigin()))
+            node.addMessage(getMessage());
+
 
         if(node.getNext().equals(Objects.isNull(getNewDestination()) ? getDestination() : getNewDestination()))
             return;
@@ -48,7 +47,7 @@ public class Message extends AbstractMessage {
                 "origin=" + getOrigin() + " " +
                 "destination=" + getDestination() + " " +
                 "newDestination=" + getNewDestination() + " " +
-                "message" + getMessage() +
+                "message=" + getMessage() +
                 "}";
     }
 }
