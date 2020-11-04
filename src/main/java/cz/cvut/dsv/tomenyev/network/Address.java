@@ -1,5 +1,7 @@
 package cz.cvut.dsv.tomenyev.network;
 
+import cz.cvut.dsv.tomenyev.utils.Constant;
+import cz.cvut.dsv.tomenyev.utils.Log;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
@@ -22,22 +24,22 @@ public class Address implements Serializable {
         String[] strs = address.split(":");
 
         if(strs.length < 2) {
+            Log.getInstance().print(Log.To.CONSOLE, Constant.BAD_ADDRESS_FORMAT);
             throw new Exception();
-            //TODO
         }
 
         try {
             this.port = Short.parseShort(strs[1]);
         } catch (Exception ignored) {
+            Log.getInstance().print(Log.To.CONSOLE, Constant.BAD_ADDRESS_FORMAT);
             throw new Exception();
-            //TODO
         }
 
         this.ip = strs[0];
 
         if(!InetAddressValidator.getInstance().isValid(this.ip)) {
+            Log.getInstance().print(Log.To.CONSOLE, Constant.BAD_ADDRESS_FORMAT);
             throw new Exception();
-            //TODO
         }
     }
 

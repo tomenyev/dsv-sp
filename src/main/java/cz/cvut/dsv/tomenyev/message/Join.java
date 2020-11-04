@@ -3,32 +3,58 @@ package cz.cvut.dsv.tomenyev.message;
 import cz.cvut.dsv.tomenyev.network.Address;
 import cz.cvut.dsv.tomenyev.network.Network;
 import cz.cvut.dsv.tomenyev.network.Node;
+import cz.cvut.dsv.tomenyev.utils.Constant;
+import lombok.Getter;
+import lombok.ToString;
 
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.util.Objects;
 
+@Getter
+@ToString
 public class Join extends AbstractMessage {
 
-    public Join(Address origin, Address destination) {
+    private Address sendBy;
+
+    public Join(Address origin, Address destination, Address sendBy) {
         super(origin, destination);
+        this.sendBy = sendBy;
     }
 
     @Override
     public void handleMessage(Node node) throws RemoteException, NotBoundException {
-        if(getOrigin().equals(node.getAddress()) && node.getNext() == null) {
+
+        if(node.getAddress().equals(getOrigin())) {
             node.setNext(getDestination());
-            return;
-        }
-        if(node.getNext() == null) {
+            node.setPrev(getSendBy());
+            if(Constant.AUTOPILOT)
+                Network.getInstance().election(node);
+
+        } else if(node.getAddress().equals(getDestination())) {
+            Address sendTo = Objects.isNull(node.getPrev()) ? getSendBy() : node.getPrev();
+            node.setNext(Objects.isNull(node.getNext()) ? getSendBy() : node.getNext());
+            node.setPrev(getSendBy());
+            Network.getInstance().send(node, sendTo, this.withSendBy(node.getAddress()));
+        } else if(node.getNext().equals(getDestination())) {
             node.setNext(getOrigin());
-            Network.getInstance().send(getOrigin(), this);
-            return;
-        }
-        if(node.getNext().equals(getDestination())) {
-            node.setNext(getOrigin());
-            Network.getInstance().send(getOrigin(), this);
+            Network.getInstance().send(node, node.getNext(), this.withSendBy(node.getAddress()));
         } else {
-            Network.getInstance().send(node.getNext(), this);
+            System.out.println("join exception has occurred.");
         }
+    }
+
+    private Join withSendBy(Address sendBy) {
+        this.sendBy = sendBy;
+        return this;
+    }
+
+    @Override
+    public String toString() {
+        return "Join{" +
+                "origin=" + getOrigin() + " " +
+                "destination=" + getDestination() + " " +
+                "sendBy=" + getSendBy() +
+                "}";
     }
 }

@@ -14,10 +14,16 @@ public class Constant {
 
     public static final String ENTER_MESSAGE_CURSOR = "message > ";
 
+    public static final String JOIN_MESSAGE_CURSOR = "address > ";
+
+    public static final String FIX_MESSAGE_CURSOR = "fix > ";
+
+    public static final String BAD_ADDRESS_FORMAT = "Bad address format. (example: 127.0.0.1:8080)";
+
     public static final String QUIT_MESSAGE = "[Process completed]";
 
-    public static final String JOIN_MESSAGE = "address > ";
-
     public static final String COMMAND_NOT_FOUND = "Command not found";
+
+    public static final boolean AUTOPILOT = true;
 
 }

@@ -2,9 +2,7 @@ package cz.cvut.dsv.tomenyev;
 
 import cz.cvut.dsv.tomenyev.network.Address;
 import cz.cvut.dsv.tomenyev.network.Node;
-import cz.cvut.dsv.tomenyev.utils.Command;
-import cz.cvut.dsv.tomenyev.utils.Constant;
-import cz.cvut.dsv.tomenyev.utils.Log;
+import cz.cvut.dsv.tomenyev.utils.*;
 
 import java.util.Objects;
 import java.util.Scanner;
@@ -13,7 +11,7 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
         if(args.length < 2 || args.length > 3) {
-            System.out.println(Constant.ARGS_HELP);
+            Log.getInstance().print(Log.To.CONSOLE, Constant.ARGS_HELP);
             exit();
         }
 
@@ -27,7 +25,7 @@ public class Main {
             if(args.length != 2)
                 remote = new Address(args[1]);
         } catch (Exception e) {
-            System.out.println(Constant.ARGS_HELP);
+            Log.getInstance().print(Log.To.CONSOLE, Constant.ARGS_HELP);
             exit();
         }
 
@@ -43,7 +41,7 @@ public class Main {
                 while(!Thread.interrupted() && node.isOk()) {
                     switch (Command.convert(next(input))) {
                         case PRINT_STATUS:
-                            System.out.println(node.toString());
+                            Log.getInstance().print(Log.To.CONSOLE, node.toString());
                             break;
                         case PRINT_LOG:
                             Log.getInstance().printLog();
@@ -52,8 +50,13 @@ public class Main {
                             node.initElection();
                             break;
                         case JOIN_NETWORK:
-                            System.out.print(Constant.JOIN_MESSAGE);
-                            remote = new Address(input.nextLine());
+                            System.out.print(Constant.JOIN_MESSAGE_CURSOR);
+                            try {
+                                remote = new Address(input.nextLine());
+                            } catch (Exception ignored) {
+                                Log.getInstance().print(Log.To.CONSOLE, Constant.BAD_ADDRESS_FORMAT);
+                                break;
+                            }
                             node.joinNetwork(remote);
                             break;
                         case SEND_MESSAGE:
@@ -62,17 +65,26 @@ public class Main {
                             break;
                         case QUIT:
                             node.quitNetwork();
-                            System.out.println(Constant.QUIT_MESSAGE);
+                            Log.getInstance().print(Log.To.CONSOLE, Constant.QUIT_MESSAGE);
                             break;
                         case FORCE_QUIT:
                             node.forceQuitNetwork();
-                            System.out.println(Constant.QUIT_MESSAGE);
+                            Log.getInstance().print(Log.To.CONSOLE, Constant.QUIT_MESSAGE);
                             break;
                         case HELP:
-                            System.out.println(Constant.CHAT_HELP);
+                            Log.getInstance().print(Log.To.CONSOLE, Constant.CHAT_HELP);
                             break;
+                        case FIX:
+                            System.out.print(Constant.FIX_MESSAGE_CURSOR);
+                            Address fix;
+                            try {
+                                fix = new Address(input.nextLine());
+                            } catch (Exception ignored) {
+                                break;
+                            }
+                            node.fixNetwork(fix);
                         default:
-                            System.out.println(Constant.COMMAND_NOT_FOUND);
+                            Log.getInstance().print(Log.To.CONSOLE,Constant.COMMAND_NOT_FOUND);
                             break;
                     }
                 }

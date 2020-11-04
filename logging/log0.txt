@@ -1,18 +1,17 @@
-[14:40.898] Initializing new network(Address(ip=127.0.0.1, port=8090)).
-[14:40.931] Trying to join existing network(Address(ip=127.0.0.1, port=8080)).
-[1][14:40.933] Address(ip=127.0.0.1, port=8090) has SEND message: 
+[14:37.849] Initializing new network(Address(ip=127.0.0.1, port=8080)).
+[2][14:41.099] Address(ip=127.0.0.1, port=8080) has RECEIVED message: 
 	 Join{origin=Address(ip=127.0.0.1, port=8090) destination=Address(ip=127.0.0.1, port=8080) sendBy=Address(ip=127.0.0.1, port=8090)}.
-[4][14:41.125] Address(ip=127.0.0.1, port=8090) has RECEIVED message: 
+[3][14:41.100] Address(ip=127.0.0.1, port=8080) has SEND message: 
 	 Join{origin=Address(ip=127.0.0.1, port=8090) destination=Address(ip=127.0.0.1, port=8080) sendBy=Address(ip=127.0.0.1, port=8080)}.
-[5][14:41.127] Address(ip=127.0.0.1, port=8090) has SEND message: 
+[6][14:41.136] Address(ip=127.0.0.1, port=8080) has RECEIVED message: 
 	 Election{origin=Address(ip=127.0.0.1, port=8090) destination=Address(ip=127.0.0.1, port=8080) candidate=Address(ip=127.0.0.1, port=8090)}.
-[8][14:41.139] Address(ip=127.0.0.1, port=8090) has RECEIVED message: 
+[7][14:41.136] Address(ip=127.0.0.1, port=8080) has SEND message: 
 	 Election{origin=Address(ip=127.0.0.1, port=8090) destination=Address(ip=127.0.0.1, port=8080) candidate=Address(ip=127.0.0.1, port=8090)}.
-[4][14:51.529] Address(ip=127.0.0.1, port=8090) has RECEIVED message: 
+[2][14:51.525] Address(ip=127.0.0.1, port=8080) has RECEIVED message: 
+	 Join{origin=Address(ip=127.0.0.1, port=8100) destination=Address(ip=127.0.0.1, port=8080) sendBy=Address(ip=127.0.0.1, port=8100)}.
+[3][14:51.526] Address(ip=127.0.0.1, port=8080) has SEND message: 
 	 Join{origin=Address(ip=127.0.0.1, port=8100) destination=Address(ip=127.0.0.1, port=8080) sendBy=Address(ip=127.0.0.1, port=8080)}.
-[5][14:51.529] Address(ip=127.0.0.1, port=8090) has SEND message: 
-	 Join{origin=Address(ip=127.0.0.1, port=8100) destination=Address(ip=127.0.0.1, port=8080) sendBy=Address(ip=127.0.0.1, port=8090)}.
-[10][14:51.548] Address(ip=127.0.0.1, port=8090) has RECEIVED message: 
+[8][14:51.545] Address(ip=127.0.0.1, port=8080) has RECEIVED message: 
 	 Election{origin=Address(ip=127.0.0.1, port=8100) destination=Address(ip=127.0.0.1, port=8080) candidate=Address(ip=127.0.0.1, port=8100)}.
-[11][14:51.549] Address(ip=127.0.0.1, port=8090) has SEND message: 
+[9][14:51.546] Address(ip=127.0.0.1, port=8080) has SEND message: 
 	 Election{origin=Address(ip=127.0.0.1, port=8100) destination=Address(ip=127.0.0.1, port=8080) candidate=Address(ip=127.0.0.1, port=8100)}.

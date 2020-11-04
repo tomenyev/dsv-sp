@@ -12,6 +12,7 @@ public enum Command {
     SEND_MESSAGE,
     INIT_ELECTION,
     QUIT,
+    FIX,
     FORCE_QUIT,
     DEFAULT,
     HELP;
@@ -20,7 +21,7 @@ public enum Command {
         if(str == null)
             return DEFAULT;
 
-        switch (str.toUpperCase()) {
+        switch (str.toUpperCase().trim()) {
             case "IN":
                 return INIT_NETWORK;
             case "JN":
@@ -39,6 +40,8 @@ public enum Command {
                 return FORCE_QUIT;
             case "H":
                 return HELP;
+            case "F":
+                return FIX;
             default:
                 return DEFAULT;
         }

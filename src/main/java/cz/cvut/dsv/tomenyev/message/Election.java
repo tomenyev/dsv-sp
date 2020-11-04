@@ -30,10 +30,19 @@ public class Election extends AbstractMessage {
         if(node.getAddress().isGreaterThan(getCandidate())) {
             node.setLeader(node.getAddress());
             Election election = new Election(node.getAddress(), node.getNext(), node.getAddress());
-            Network.getInstance().send(node.getNext(), election);
+            Network.getInstance().send(node, node.getNext(), election);
         } else {
             node.setLeader(getCandidate());
-            Network.getInstance().send(node.getNext(), this);
+            Network.getInstance().send(node, node.getNext(), this);
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Election{" +
+                "origin=" + getOrigin() + " " +
+                "destination=" + getDestination() + " " +
+                "candidate=" + getCandidate() +
+                "}";
     }
 }

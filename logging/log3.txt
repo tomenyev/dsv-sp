@@ -1,0 +1,10 @@
+[11:33.967] Initializing new network(Address(ip=127.0.0.1, port=8110)).
+[11:33.979] Trying to join existing network(Address(ip=127.0.0.1, port=8090)).
+[0][11:33.980] Address(ip=127.0.0.1, port=8110) has SEND message: 
+	 Join{origin=Address(ip=127.0.0.1, port=8110) destination=Address(ip=127.0.0.1, port=8090) sendBy=Address(ip=127.0.0.1, port=8110)}.
+[5][11:34.088] Address(ip=127.0.0.1, port=8110) has RECEIVED message: 
+	 Join{origin=Address(ip=127.0.0.1, port=8110) destination=Address(ip=127.0.0.1, port=8090) sendBy=Address(ip=127.0.0.1, port=8080)}.
+[6][11:34.089] Address(ip=127.0.0.1, port=8110) has SEND message: 
+	 Election{origin=Address(ip=127.0.0.1, port=8110) destination=Address(ip=127.0.0.1, port=8090) candidate=Address(ip=127.0.0.1, port=8110)}.
+[13][11:34.105] Address(ip=127.0.0.1, port=8110) has RECEIVED message: 
+	 Election{origin=Address(ip=127.0.0.1, port=8110) destination=Address(ip=127.0.0.1, port=8090) candidate=Address(ip=127.0.0.1, port=8110)}.
