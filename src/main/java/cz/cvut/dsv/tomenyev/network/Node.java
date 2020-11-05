@@ -31,9 +31,9 @@ public class Node extends UnicastRemoteObject implements AbstractNode {
 
     private List<String> messages = new ArrayList<>();
 
-    private Queue<AbstractMessage> inbox = new LinkedList<>();
+    private Set<AbstractMessage> inbox = new LinkedHashSet<>();
 
-    private Queue<AbstractMessage> drafts = new LinkedList<>();
+    private Set<AbstractMessage> drafts = new LinkedHashSet<>();
 
     public Node(Address address) throws RemoteException {
         this.address = address;

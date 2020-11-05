@@ -26,6 +26,8 @@ public class Fix extends AbstractMessage{
 
     private boolean fixed = false;
 
+    private boolean done = false;
+
     private Address candidate;
 
     public Fix(Address origin, Address destination, Address quit, Address candidate, boolean direction) {
@@ -38,7 +40,6 @@ public class Fix extends AbstractMessage{
 
     @Override
     public void handleMessage(Node node) throws Exception {
-
         if((Objects.isNull(node.getNext()) || Objects.isNull(node.getPrev())) && Objects.isNull(node.getLeader()) && !isJoinFailed()) {
             setJoinFailed(true);
             if(Objects.isNull(node.getNext()) && Objects.isNull(node.getPrev())) {
@@ -83,29 +84,32 @@ public class Fix extends AbstractMessage{
                 node.setLeader(getCandidate());
                 setFixed(true);
             }
-        } else {
-            if(getQuit().equals(node.getNext()) && Objects.isNull(getNext()) && Objects.isNull(getPrev())) {
-                node.setNext(null);
-                setPrev(node.getAddress());
+        }
+        else {
+            if(isDone() && node.getAddress().equals(getOrigin())) {
+                node.setNext(!isDirection() ? getSendBy() : node.getNext());
+                node.setPrev(isDirection() ? getSendBy() : node.getPrev());
+                setDone(false);
+                setFixed(true);
+            } else if(!node.getAddress().equals(getOrigin()) && Objects.isNull(node.getNext())) {
+                node.setNext(getOrigin());
+                setDirection(true);
+                setDone(true);
+            } else if(!node.getAddress().equals(getOrigin()) && Objects.isNull(node.getPrev())) {
+                node.setPrev(getOrigin());
                 setDirection(false);
-            } else if (getQuit().equals(node.getPrev()) && Objects.nonNull(getPrev()) && Objects.isNull(getNext())) {
-                node.setPrev(getPrev());
-                setNext(node.getAddress());
-            } else if(Objects.isNull(node.getNext()) && Objects.nonNull(getNext()) && Objects.nonNull(getPrev())) {
-                node.setNext(getNext());
+                setDone(true);
+            } else if(getQuit().equals(node.getNext())) {
+                node.setNext(null);
+                setDirection(false);
+            } else if(getQuit().equals(node.getPrev())) {
+                node.setPrev(null);
+                setDirection(true);
+            } else if(node.getAddress().equals(getOrigin())) {
                 setFixed(true);
             }
-
-            if(getQuit().equals(node.getPrev()) && Objects.isNull(getNext()) && Objects.isNull(getPrev())) {
-                node.setPrev(null);
-                setNext(node.getAddress());
-                setDirection(true);
-            } else if (getQuit().equals(node.getNext()) && Objects.nonNull(getNext()) && Objects.isNull(getPrev())) {
-                node.setNext(getNext());
-                setPrev(node.getAddress());
-            } else if (Objects.isNull(node.getPrev()) && Objects.nonNull(getPrev()) && Objects.nonNull(getNext())) {
-                node.setPrev(getPrev());
-                setFixed(true);
+            if(!node.getAddress().equals(getOrigin()) && node.isFixing() || isDirection() && Objects.isNull(node.getNext()) || !isDirection() && Objects.isNull(node.getPrev())) {
+                setDirection(!isDirection());
             }
         }
 
@@ -119,6 +123,7 @@ public class Fix extends AbstractMessage{
             node.setLeader(getCandidate());
         }
 
+        setSendBy(node.getAddress());
         Network.getInstance().send(node, isDirection() ? node.getNext() : node.getPrev(), this);
     }
 

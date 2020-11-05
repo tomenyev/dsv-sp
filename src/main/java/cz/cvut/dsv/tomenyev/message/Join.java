@@ -10,7 +10,6 @@ import lombok.ToString;
 import java.util.Objects;
 
 @Getter
-@ToString
 public class Join extends AbstractMessage {
 
     private Address sendBy;

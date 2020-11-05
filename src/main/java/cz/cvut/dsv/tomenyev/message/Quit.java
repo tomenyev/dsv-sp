@@ -10,7 +10,7 @@ import lombok.ToString;
 
 import java.util.Objects;
 
-@ToString
+
 @Getter
 @Setter
 public class Quit extends AbstractMessage {
@@ -54,7 +54,7 @@ public class Quit extends AbstractMessage {
 
     @Override
     public String toString() {
-        return "Message{" +
+        return "Quit{" +
                 "origin=" + getOrigin() + " " +
                 "destination=" + getDestination() + " " +
                 "next=" + getNext() + " " +

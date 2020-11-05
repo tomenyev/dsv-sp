@@ -3,6 +3,7 @@ package cz.cvut.dsv.tomenyev.message;
 import cz.cvut.dsv.tomenyev.network.Address;
 import cz.cvut.dsv.tomenyev.network.Network;
 import cz.cvut.dsv.tomenyev.network.Node;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -10,7 +11,7 @@ import lombok.ToString;
 import java.util.Objects;
 
 @Getter
-@ToString
+@EqualsAndHashCode(callSuper = true)
 public class Message extends AbstractMessage {
 
     private final String message;
@@ -26,7 +27,7 @@ public class Message extends AbstractMessage {
     @Override
     public void handleMessage(Node node) throws Exception {
 
-        if(!node.getAddress().equals(getOrigin()))
+        if(!node.getAddress().equals(getOrigin()) && !getDestination().equals(getNewDestination()))
             node.addMessage(getMessage());
 
 

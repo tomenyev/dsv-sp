@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.Objects;
 
 @SuppressWarnings("UnusedReturnValue")
@@ -120,31 +122,31 @@ public class Network {
         node.setFixing(false);
         if(Objects.nonNull(node.getNext())) {
             try {
-                while(!node.getDrafts().isEmpty()) {
-                    AbstractMessage message = node.getDrafts().remove();
-                    if(message instanceof Message) {
+                for (AbstractMessage message : node.getDrafts()) {
+                    if (message instanceof Message) {
                         Message m = (Message) message;
                         m.setNewDestination(node.getLeader());
                         this.send(node, node.getLeader(), m);
-                    } else if (message instanceof  Quit) {
+                    } else if (message instanceof Quit) {
                         quit = true;
                         Quit q = (Quit) message;
-                        if(!(q.getDestination().equals(node.getLeader()) || q.getDestination().equals(node.getNext()))) {
+                        if (!(q.getDestination().equals(node.getLeader()) || q.getDestination().equals(node.getNext()))) {
                             q.setNewDestination(node.getAddress().equals(node.getLeader()) ? node.getNext() : node.getLeader());
                             q.setNext(node.getNext());
                             q.setPrev(node.getPrev());
                         }
                         this.send(node, q.getNewDestination(), q);
-                    } else if(message instanceof Join) {
+                    } else if (message instanceof Join) {
                         this.send(node, node.getAddress(), message);
                     } else {
                         this.send(node, node.getNext(), message);
                     }
                 }
-                while(!node.getInbox().isEmpty()) {
-                    AbstractMessage message = node.getInbox().remove();
+                node.setDrafts(new LinkedHashSet<>());
+                for (AbstractMessage message : node.getInbox()) {
                     node.handleMessage(message);
                 }
+                node.setInbox(new LinkedHashSet<>());
             } catch (Exception e) {
 //                e.printStackTrace();
                   Log.getInstance().print(Log.To.BOTH, "Node " + node.getAddress() + " has FAILED to HANDLE DRAFTS and INBOX");

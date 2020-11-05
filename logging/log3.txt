@@ -1,19 +1,23 @@
-[16:57.593] Node Address(ip=127.0.0.1, port=8110) is TRYING to INITIALIZE network.
-[16:57.612] Node Address(ip=127.0.0.1, port=8110) has INITIALIZED network.
-[16:57.613] Node Address(ip=127.0.0.1, port=8110) is TRYING to JOIN the network(Address(ip=127.0.0.1, port=8080)).
-[16:57.613] Address(ip=127.0.0.1, port=8110) has SENT the message: 
+[44:18.045] Node Address(ip=127.0.0.1, port=8110) is TRYING to INITIALIZE network.
+[44:18.056] Node Address(ip=127.0.0.1, port=8110) has INITIALIZED network.
+[44:18.057] Node Address(ip=127.0.0.1, port=8110) is TRYING to JOIN the network(Address(ip=127.0.0.1, port=8080)).
+[44:18.058] Address(ip=127.0.0.1, port=8110) has SENT the message: 
 	 Join{origin=Address(ip=127.0.0.1, port=8110) destination=Address(ip=127.0.0.1, port=8080) sendBy=Address(ip=127.0.0.1, port=8110)}.
-[16:57.725] Node Address(ip=127.0.0.1, port=8110) has RECEIVED the message: 
-	 Join{origin=Address(ip=127.0.0.1, port=8110) destination=Address(ip=127.0.0.1, port=8080) sendBy=Address(ip=127.0.0.1, port=8100)}.
-[16:57.726] Address(ip=127.0.0.1, port=8110) has SENT the message: 
-	 Election{origin=Address(ip=127.0.0.1, port=8110) destination=Address(ip=127.0.0.1, port=8080) candidate=Address(ip=127.0.0.1, port=8110)}.
-[16:57.740] Node Address(ip=127.0.0.1, port=8110) has RECEIVED the message: 
-	 Election{origin=Address(ip=127.0.0.1, port=8110) destination=Address(ip=127.0.0.1, port=8080) candidate=Address(ip=127.0.0.1, port=8110)}.
-[17:01.373] Node Address(ip=127.0.0.1, port=8110) has RECEIVED the message: 
-	 Join{origin=Address(ip=127.0.0.1, port=8120) destination=Address(ip=127.0.0.1, port=8080) sendBy=Address(ip=127.0.0.1, port=8080)}.
-[17:01.373] Address(ip=127.0.0.1, port=8110) has SENT the message: 
-	 Join{origin=Address(ip=127.0.0.1, port=8120) destination=Address(ip=127.0.0.1, port=8080) sendBy=Address(ip=127.0.0.1, port=8110)}.
-[17:01.405] Node Address(ip=127.0.0.1, port=8110) has RECEIVED the message: 
-	 Election{origin=Address(ip=127.0.0.1, port=8120) destination=Address(ip=127.0.0.1, port=8080) candidate=Address(ip=127.0.0.1, port=8120)}.
-[17:01.406] Address(ip=127.0.0.1, port=8110) has SENT the message: 
-	 Election{origin=Address(ip=127.0.0.1, port=8120) destination=Address(ip=127.0.0.1, port=8080) candidate=Address(ip=127.0.0.1, port=8120)}.
+[44:18.153] Node Address(ip=127.0.0.1, port=8110) has RECEIVED the message: 
+	 Fix{origin=Address(ip=127.0.0.1, port=8080) destination=Address(ip=127.0.0.1, port=8110) quit=Address(ip=127.0.0.1, port=8100)}.
+[44:18.155] Address(ip=127.0.0.1, port=8110) has SENT the message: 
+	 Fix{origin=Address(ip=127.0.0.1, port=8080) destination=Address(ip=127.0.0.1, port=8110) quit=Address(ip=127.0.0.1, port=8100)}.
+[44:18.161] Node Address(ip=127.0.0.1, port=8110) has RECEIVED the message: 
+	 Fix{origin=Address(ip=127.0.0.1, port=8080) destination=Address(ip=127.0.0.1, port=8110) quit=Address(ip=127.0.0.1, port=8090)}.
+[44:18.162] Address(ip=127.0.0.1, port=8110) has SENT the message: 
+	 Fix{origin=Address(ip=127.0.0.1, port=8080) destination=Address(ip=127.0.0.1, port=8110) quit=Address(ip=127.0.0.1, port=8090)}.
+[44:18.166] Node Address(ip=127.0.0.1, port=8110) has RECEIVED the message: 
+	 Fix{origin=Address(ip=127.0.0.1, port=8080) destination=Address(ip=127.0.0.1, port=8110) quit=Address(ip=127.0.0.1, port=8090)}.
+[44:18.168] Address(ip=127.0.0.1, port=8110) has SENT the message: 
+	 Fix{origin=Address(ip=127.0.0.1, port=8080) destination=Address(ip=127.0.0.1, port=8110) quit=Address(ip=127.0.0.1, port=8090)}.
+[44:18.169] Node Address(ip=127.0.0.1, port=8110) has RECEIVED the message: 
+	 Fix{origin=Address(ip=127.0.0.1, port=8080) destination=Address(ip=127.0.0.1, port=8110) quit=Address(ip=127.0.0.1, port=8090)}.
+[44:18.173] Node Address(ip=127.0.0.1, port=8110) has RECEIVED the message: 
+	 Fix{origin=Address(ip=127.0.0.1, port=8080) destination=Address(ip=127.0.0.1, port=8110) quit=Address(ip=127.0.0.1, port=8100)}.
+[44:18.176] Node Address(ip=127.0.0.1, port=8110) has RECEIVED the message: 
+	 Fix{origin=Address(ip=127.0.0.1, port=8080) destination=Address(ip=127.0.0.1, port=8110) quit=Address(ip=127.0.0.1, port=8090)}.
