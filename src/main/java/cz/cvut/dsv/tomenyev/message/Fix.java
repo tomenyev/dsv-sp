@@ -5,11 +5,7 @@ import cz.cvut.dsv.tomenyev.network.Network;
 import cz.cvut.dsv.tomenyev.network.Node;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
-import java.net.UnknownHostException;
-import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
 import java.util.Objects;
 
 @Getter
@@ -42,16 +38,27 @@ public class Fix extends AbstractMessage{
 
     @Override
     public void handleMessage(Node node) throws Exception {
+
         if((Objects.isNull(node.getNext()) || Objects.isNull(node.getPrev())) && Objects.isNull(node.getLeader()) && !isJoinFailed()) {
             setJoinFailed(true);
-            if(isDirection()) {
-                node.setPrev(getSendBy());
-                setDirection(false);
-                setPrev(node.getAddress());
+            if(Objects.isNull(node.getNext()) && Objects.isNull(node.getPrev())) {
+                if(isDirection()) {
+                    node.setPrev(getSendBy());
+                    setDirection(false);
+                    setPrev(node.getAddress());
+                } else {
+                    node.setNext(getSendBy());
+                    setDirection(true);
+                    setNext(node.getAddress());
+                }
             } else {
-                node.setNext(getSendBy());
-                setDirection(true);
-                setNext(node.getAddress());
+                if(isDirection()) {
+                    setDirection(false);
+                    setPrev(node.getAddress());
+                } else {
+                    setDirection(true);
+                    setNext(node.getAddress());
+                }
             }
         } else if(isJoinFailed()) {
             if(Objects.isNull(node.getNext())) {
@@ -72,8 +79,7 @@ public class Fix extends AbstractMessage{
                 node.setNext(getNext());
                 setPrev(node.getAddress());
             }
-            if(node.getAddress().equals(getDestination()) && Objects.nonNull(node.getNext())
-            && Objects.nonNull(node.getPrev())) {
+            if(node.getAddress().equals(getDestination()) && Objects.nonNull(node.getNext()) && Objects.nonNull(node.getPrev())) {
                 node.setLeader(getCandidate());
                 setFixed(true);
             }
@@ -114,7 +120,6 @@ public class Fix extends AbstractMessage{
         }
 
         Network.getInstance().send(node, isDirection() ? node.getNext() : node.getPrev(), this);
-
     }
 
 

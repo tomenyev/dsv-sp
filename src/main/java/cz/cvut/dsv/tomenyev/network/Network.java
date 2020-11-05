@@ -1,14 +1,11 @@
 package cz.cvut.dsv.tomenyev.network;
 
-import com.sun.xml.internal.ws.api.message.ExceptionHasMessage;
 import cz.cvut.dsv.tomenyev.message.*;
 import cz.cvut.dsv.tomenyev.utils.Constant;
 import cz.cvut.dsv.tomenyev.utils.Log;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
-import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.Objects;
@@ -74,10 +71,6 @@ public class Network {
             AbstractNode node = (AbstractNode) registry.lookup(Constant.NAME);
             node.handleMessage(message);
         } catch (Exception e) {
-//            e.printStackTrace();
-            if(!checkConnect(origin, destination))
-                origin.clear();
-
 
             Log.getInstance().print(Log.To.BOTH, origin.getAddress() + " has FAILED to SEND the message: \n\t "+message);
             origin.addDraft(message);
@@ -86,41 +79,6 @@ public class Network {
             throw new Exception();
         }
         return this;
-    }
-
-    private boolean checkConnect(Node origin, Address destination) {
-        Address check1 = origin.getNext();
-        Address check2 = origin.getPrev();
-
-        if(Objects.isNull(check1) && Objects.isNull(check2))
-            return false;
-
-        if (check1.equals(destination) && check2.equals(check1))
-            return false;
-
-        if(check1.equals(destination)) {
-            boolean ok = false;
-            try {
-                Registry registry = LocateRegistry.getRegistry(check2.getIp(), check2.getPort());
-                AbstractNode n = (AbstractNode) registry.lookup(Constant.NAME);
-                ok = true;
-            } catch (Exception ignored) {}
-            if (ok) return true;
-        }
-
-        if(check2.equals(destination)) {
-            boolean ok = false;
-            try {
-                Registry registry = LocateRegistry.getRegistry(check1.getIp(), check1.getPort());
-                AbstractNode n = (AbstractNode) registry.lookup(Constant.NAME);
-                ok = true;
-            } catch (Exception e) {
-                return false;
-            }
-            if(ok) return true;
-        }
-
-        return true;
     }
 
     public Network send(Node node, String message) throws Exception {

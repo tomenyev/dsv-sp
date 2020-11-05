@@ -7,8 +7,6 @@ import cz.cvut.dsv.tomenyev.utils.Constant;
 import lombok.Getter;
 import lombok.ToString;
 
-import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
 import java.util.Objects;
 
 @Getter
