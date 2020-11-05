@@ -1,6 +1,9 @@
 package cz.cvut.dsv.tomenyev.network;
 
-import cz.cvut.dsv.tomenyev.message.*;
+import cz.cvut.dsv.tomenyev.message.AbstractMessage;
+import cz.cvut.dsv.tomenyev.message.Fix;
+import cz.cvut.dsv.tomenyev.message.Join;
+import cz.cvut.dsv.tomenyev.message.MessageHandler;
 import cz.cvut.dsv.tomenyev.utils.Constant;
 import cz.cvut.dsv.tomenyev.utils.Log;
 import lombok.Getter;
@@ -11,7 +14,6 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.*;
 
-@SuppressWarnings("UnusedReturnValue")
 @Getter
 @Setter
 @ToString(of = {"address", "next", "prev", "leader", "ok", "fixing", "messages", "inbox", "drafts"})
@@ -31,38 +33,47 @@ public class Node extends UnicastRemoteObject implements AbstractNode {
 
     private List<String> messages = new ArrayList<>();
 
-    private Set<AbstractMessage> inbox = new LinkedHashSet<>();
+    private Queue<AbstractMessage> inbox = new LinkedList<>();
 
-    private Set<AbstractMessage> drafts = new LinkedHashSet<>();
+    private Queue<AbstractMessage> drafts = new LinkedList<>();
 
     public Node(Address address) throws RemoteException {
         this.address = address;
     }
 
     public Node initNetwork() {
-        Log.getInstance().print(Log.To.BOTH, "Node " +getAddress() +" is TRYING to INITIALIZE network");
+        boolean ok;
+        Log.getInstance().print(Log.To.BOTH, "Node " +getAddress() +" is TRYING to INITIALIZE the network");
         try {
             Network.getInstance().init(this);
+            ok = true;
         } catch (Exception e) {
-           Log.getInstance().print(Log.To.BOTH, "Node " +getAddress() +" has FAILED to INITIALIZE network");
-           this.setOk(false);
+            ok = false;
+            Log.getInstance().print(Log.To.BOTH, "Node " +getAddress() +" has FAILED to INITIALIZE the network");
+            this.setOk(false);
 //           e.printStackTrace();
         }
+        if (ok)
+            Log.getInstance().print(Log.To.BOTH, "Node " +getAddress() +" has INITIALIZED the network");
         return this;
     }
 
-    public Node joinNetwork(Address remote) {
+    public void joinNetwork(Address remote) {
+        boolean ok;
         Log.getInstance().print(Log.To.BOTH, "Node " + getAddress()+" is TRYING to JOIN the network("+remote+")");
         try {
             Network.getInstance().join(this, remote);
+            ok = true;
         } catch (Exception e) {
+            ok = false;
             Log.getInstance().print(Log.To.BOTH, "Node " + getAddress()+" has FAILED to JOIN the network("+remote+")");
 //            e.printStackTrace();
         }
-        return this;
+        if (ok)
+            Log.getInstance().print(Log.To.BOTH, "Node " + getAddress()+" has JOINED the network("+remote+")");
     }
 
-    public Node initElection() {
+    public void initElection() {
         Log.getInstance().print(Log.To.BOTH, "Node " +getAddress() +" is TRYING to INITIALIZE LEADER ELECTION");
         try {
             Network.getInstance().election(this);
@@ -70,34 +81,33 @@ public class Node extends UnicastRemoteObject implements AbstractNode {
             Log.getInstance().print(Log.To.BOTH, "Node " + getAddress() + " has FAILED to INITIALIZE LEADER ELECTION");
 //            e.printStackTrace();
         }
-        return this;
     }
 
-    public Node sendMessage(String message) {
+    public void sendMessage(String message) {
         Log.getInstance().print(Log.To.BOTH, "Node "+getAddress()+" has SENT the TEXT message: " + message);
-
         try {
             Network.getInstance().send(this, message);
         } catch (Exception e) {
             Log.getInstance().print(Log.To.BOTH, "Node "+getAddress()+" has FAILED to SEND the TEXT message: " + message);
 //            e.printStackTrace();
         }
-        return this;
     }
 
     public void quitNetwork() {
-        boolean success;
+        boolean ok;
         Log.getInstance().print(Log.To.BOTH, "Node " + getAddress() + " is TRYING to SAFETY QUIT the network");
         try {
-            success = true;
+            ok = true;
             Network.getInstance().quit(this);
         } catch (Exception e) {
-            success = false;
+            ok = false;
             Log.getInstance().print(Log.To.BOTH, "Node " + getAddress() + " has FAILED to SAFETY QUIT the network");
 //            e.printStackTrace();
         }
-        if(success)
+        if(ok) {
+            Log.getInstance().print(Log.To.CONSOLE, "Node " + getAddress() + " has SAFETY QUIT the network");
             Log.getInstance().print(Log.To.CONSOLE, Constant.QUIT_MESSAGE);
+        }
     }
 
     public void fixNetwork(Address quit) {

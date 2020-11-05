@@ -1,133 +1,37 @@
-[26:27.940] Node Address(ip=127.0.0.1, port=8100) is TRYING to INITIALIZE network.
-[26:27.949] Node Address(ip=127.0.0.1, port=8100) has INITIALIZED network.
-[26:27.949] Node Address(ip=127.0.0.1, port=8100) is TRYING to JOIN the network(Address(ip=127.0.0.1, port=8080)).
-[26:27.950] Address(ip=127.0.0.1, port=8100) has SENT the message: 
+[19:07.302] Node Address(ip=127.0.0.1, port=8100) is TRYING to INITIALIZE network.
+[19:07.313] Node Address(ip=127.0.0.1, port=8100) has INITIALIZED network.
+[19:07.313] Node Address(ip=127.0.0.1, port=8100) is TRYING to JOIN the network(Address(ip=127.0.0.1, port=8080)).
+[19:07.313] Address(ip=127.0.0.1, port=8100) has SENT the message: 
 	 Join{origin=Address(ip=127.0.0.1, port=8100) destination=Address(ip=127.0.0.1, port=8080) sendBy=Address(ip=127.0.0.1, port=8100)}.
-[26:28.055] Node Address(ip=127.0.0.1, port=8100) has RECEIVED the message: 
+[19:07.420] Node Address(ip=127.0.0.1, port=8100) has RECEIVED the message: 
 	 Join{origin=Address(ip=127.0.0.1, port=8100) destination=Address(ip=127.0.0.1, port=8080) sendBy=Address(ip=127.0.0.1, port=8090)}.
-[26:28.057] Address(ip=127.0.0.1, port=8100) has SENT the message: 
+[19:07.421] Address(ip=127.0.0.1, port=8100) has SENT the message: 
 	 Election{origin=Address(ip=127.0.0.1, port=8100) destination=Address(ip=127.0.0.1, port=8080) candidate=Address(ip=127.0.0.1, port=8100)}.
-[26:28.066] Node Address(ip=127.0.0.1, port=8100) has RECEIVED the message: 
+[19:07.431] Node Address(ip=127.0.0.1, port=8100) has RECEIVED the message: 
 	 Election{origin=Address(ip=127.0.0.1, port=8100) destination=Address(ip=127.0.0.1, port=8080) candidate=Address(ip=127.0.0.1, port=8100)}.
-[26:31.361] Node Address(ip=127.0.0.1, port=8100) has RECEIVED the message: 
+[19:20.668] Node Address(ip=127.0.0.1, port=8100) has RECEIVED the message: 
 	 Join{origin=Address(ip=127.0.0.1, port=8110) destination=Address(ip=127.0.0.1, port=8080) sendBy=Address(ip=127.0.0.1, port=8080)}.
-[26:31.362] Address(ip=127.0.0.1, port=8100) has SENT the message: 
+[19:20.668] Address(ip=127.0.0.1, port=8100) has SENT the message: 
 	 Join{origin=Address(ip=127.0.0.1, port=8110) destination=Address(ip=127.0.0.1, port=8080) sendBy=Address(ip=127.0.0.1, port=8100)}.
-[26:31.386] Node Address(ip=127.0.0.1, port=8100) has RECEIVED the message: 
+[19:20.691] Node Address(ip=127.0.0.1, port=8100) has RECEIVED the message: 
 	 Election{origin=Address(ip=127.0.0.1, port=8110) destination=Address(ip=127.0.0.1, port=8080) candidate=Address(ip=127.0.0.1, port=8110)}.
-[26:31.387] Address(ip=127.0.0.1, port=8100) has SENT the message: 
+[19:20.691] Address(ip=127.0.0.1, port=8100) has SENT the message: 
 	 Election{origin=Address(ip=127.0.0.1, port=8110) destination=Address(ip=127.0.0.1, port=8080) candidate=Address(ip=127.0.0.1, port=8110)}.
-[26:44.714] Node Address(ip=127.0.0.1, port=8100) has RECEIVED the message: 
-	 Fix{origin=Address(ip=127.0.0.1, port=8080) destination=Address(ip=127.0.0.1, port=8090) quit=Address(ip=127.0.0.1, port=8110)}.
-[26:44.714] Address(ip=127.0.0.1, port=8100) has SENT the message: 
-	 Fix{origin=Address(ip=127.0.0.1, port=8080) destination=Address(ip=127.0.0.1, port=8090) quit=Address(ip=127.0.0.1, port=8110)}.
-[26:44.732] Node Address(ip=127.0.0.1, port=8100) has RECEIVED the message: 
-	 Fix{origin=Address(ip=127.0.0.1, port=8080) destination=Address(ip=127.0.0.1, port=8090) quit=Address(ip=127.0.0.1, port=8110)}.
-[26:44.733] Address(ip=127.0.0.1, port=8100) has SENT the message: 
-	 Fix{origin=Address(ip=127.0.0.1, port=8080) destination=Address(ip=127.0.0.1, port=8090) quit=Address(ip=127.0.0.1, port=8110)}.
-[26:44.745] Node Address(ip=127.0.0.1, port=8100) has RECEIVED the message: 
-	 Fix{origin=Address(ip=127.0.0.1, port=8080) destination=Address(ip=127.0.0.1, port=8090) quit=Address(ip=127.0.0.1, port=8110)}.
-[26:44.747] Node Address(ip=127.0.0.1, port=8100) has RECEIVED the message: 
-	 Message{origin=Address(ip=127.0.0.1, port=8080) destination=Address(ip=127.0.0.1, port=8110) newDestination=Address(ip=127.0.0.1, port=8100) message=hjkkjljkl}.
-[26:47.726] Address(ip=127.0.0.1, port=8100) > message > hjkkjljkl.
-[26:47.726] Address(ip=127.0.0.1, port=8100) has SENT the message: 
-	 Message{origin=Address(ip=127.0.0.1, port=8080) destination=Address(ip=127.0.0.1, port=8110) newDestination=Address(ip=127.0.0.1, port=8100) message=hjkkjljkl}.
-[27:38.177] Node Address(ip=127.0.0.1, port=8100) has RECEIVED the message: 
-	 Join{origin=Address(ip=127.0.0.1, port=8110) destination=Address(ip=127.0.0.1, port=8080) sendBy=Address(ip=127.0.0.1, port=8080)}.
-[27:38.178] Address(ip=127.0.0.1, port=8100) has SENT the message: 
-	 Join{origin=Address(ip=127.0.0.1, port=8110) destination=Address(ip=127.0.0.1, port=8080) sendBy=Address(ip=127.0.0.1, port=8100)}.
-[27:38.208] Node Address(ip=127.0.0.1, port=8100) has RECEIVED the message: 
-	 Election{origin=Address(ip=127.0.0.1, port=8110) destination=Address(ip=127.0.0.1, port=8080) candidate=Address(ip=127.0.0.1, port=8110)}.
-[27:38.209] Address(ip=127.0.0.1, port=8100) has SENT the message: 
-	 Election{origin=Address(ip=127.0.0.1, port=8110) destination=Address(ip=127.0.0.1, port=8080) candidate=Address(ip=127.0.0.1, port=8110)}.
-[28:00.763] Node Address(ip=127.0.0.1, port=8100) is TRYING to SAFETY QUIT the network.
-[28:00.764] Address(ip=127.0.0.1, port=8100) has SENT the message: 
-	 Message{origin=Address(ip=127.0.0.1, port=8100) destination=Address(ip=127.0.0.1, port=8110) next=Address(ip=127.0.0.1, port=8110) prev=Address(ip=127.0.0.1, port=8090)}.
-[28:00.766] Address(ip=127.0.0.1, port=8100) has FAILED to SEND the message: 
-	 Message{origin=Address(ip=127.0.0.1, port=8100) destination=Address(ip=127.0.0.1, port=8110) next=Address(ip=127.0.0.1, port=8110) prev=Address(ip=127.0.0.1, port=8090)}.
-[28:00.767] Node Address(ip=127.0.0.1, port=8100) has SAVED message to the DRAFTS
-	Message{origin=Address(ip=127.0.0.1, port=8100) destination=Address(ip=127.0.0.1, port=8110) next=Address(ip=127.0.0.1, port=8110) prev=Address(ip=127.0.0.1, port=8090)}.
-[28:00.767] Node Address(ip=127.0.0.1, port=8100) is TRYING to FIX the network.
-[28:00.768] Address(ip=127.0.0.1, port=8100) has SENT the message: 
-	 Fix{origin=Address(ip=127.0.0.1, port=8100) destination=Address(ip=127.0.0.1, port=8090) quit=Address(ip=127.0.0.1, port=8110)}.
-[28:00.779] Node Address(ip=127.0.0.1, port=8100) has FAILED to SAFETY QUIT the network.
-[28:00.791] Node Address(ip=127.0.0.1, port=8100) has RECEIVED the message: 
-	 Fix{origin=Address(ip=127.0.0.1, port=8100) destination=Address(ip=127.0.0.1, port=8090) quit=Address(ip=127.0.0.1, port=8110)}.
-[28:00.792] Address(ip=127.0.0.1, port=8100) has SENT the message: 
-	 Fix{origin=Address(ip=127.0.0.1, port=8100) destination=Address(ip=127.0.0.1, port=8090) quit=Address(ip=127.0.0.1, port=8110)}.
-[28:00.796] Node Address(ip=127.0.0.1, port=8100) is TRYING to HANDLE DRAFTS and INBOX.
-[28:00.803] Node Address(ip=127.0.0.1, port=8100) has RECEIVED the message: 
-	 Fix{origin=Address(ip=127.0.0.1, port=8100) destination=Address(ip=127.0.0.1, port=8090) quit=Address(ip=127.0.0.1, port=8110)}.
-[31:18.172] Node Address(ip=127.0.0.1, port=8100) has RECEIVED the message: 
-	 Join{origin=Address(ip=127.0.0.1, port=8110) destination=Address(ip=127.0.0.1, port=8080) sendBy=Address(ip=127.0.0.1, port=8080)}.
-[31:18.173] Address(ip=127.0.0.1, port=8100) has SENT the message: 
-	 Join{origin=Address(ip=127.0.0.1, port=8110) destination=Address(ip=127.0.0.1, port=8080) sendBy=Address(ip=127.0.0.1, port=8100)}.
-[31:18.197] Node Address(ip=127.0.0.1, port=8100) has RECEIVED the message: 
-	 Election{origin=Address(ip=127.0.0.1, port=8110) destination=Address(ip=127.0.0.1, port=8080) candidate=Address(ip=127.0.0.1, port=8110)}.
-[31:18.198] Address(ip=127.0.0.1, port=8100) has SENT the message: 
-	 Election{origin=Address(ip=127.0.0.1, port=8110) destination=Address(ip=127.0.0.1, port=8080) candidate=Address(ip=127.0.0.1, port=8110)}.
-[31:34.504] Node Address(ip=127.0.0.1, port=8100) has RECEIVED the message: 
-	 Message{origin=Address(ip=127.0.0.1, port=8090) destination=Address(ip=127.0.0.1, port=8110) next=Address(ip=127.0.0.1, port=8100) prev=Address(ip=127.0.0.1, port=8080)}.
-[31:34.505] Address(ip=127.0.0.1, port=8100) has SENT the message: 
-	 Message{origin=Address(ip=127.0.0.1, port=8090) destination=Address(ip=127.0.0.1, port=8110) next=Address(ip=127.0.0.1, port=8100) prev=Address(ip=127.0.0.1, port=8080)}.
-[31:34.507] Address(ip=127.0.0.1, port=8100) has FAILED to SEND the message: 
-	 Message{origin=Address(ip=127.0.0.1, port=8090) destination=Address(ip=127.0.0.1, port=8110) next=Address(ip=127.0.0.1, port=8100) prev=Address(ip=127.0.0.1, port=8080)}.
-[31:34.507] Node Address(ip=127.0.0.1, port=8100) has SAVED message to the DRAFTS
-	Message{origin=Address(ip=127.0.0.1, port=8090) destination=Address(ip=127.0.0.1, port=8110) next=Address(ip=127.0.0.1, port=8100) prev=Address(ip=127.0.0.1, port=8080)}.
-[31:34.507] Node Address(ip=127.0.0.1, port=8100) is TRYING to FIX the network.
-[31:34.507] Address(ip=127.0.0.1, port=8100) has SENT the message: 
-	 Fix{origin=Address(ip=127.0.0.1, port=8100) destination=Address(ip=127.0.0.1, port=8080) quit=Address(ip=127.0.0.1, port=8110)}.
-[31:34.516] Node Address(ip=127.0.0.1, port=8100) has RECEIVED the message: 
-	 Fix{origin=Address(ip=127.0.0.1, port=8100) destination=Address(ip=127.0.0.1, port=8080) quit=Address(ip=127.0.0.1, port=8110)}.
-[31:34.517] Node Address(ip=127.0.0.1, port=8100) is TRYING to HANDLE DRAFTS and INBOX.
-[31:34.517] Address(ip=127.0.0.1, port=8100) has SENT the message: 
-	 Message{origin=Address(ip=127.0.0.1, port=8100) destination=Address(ip=127.0.0.1, port=8110) next=Address(ip=127.0.0.1, port=8080) prev=Address(ip=127.0.0.1, port=8080)}.
-[31:34.523] Address(ip=127.0.0.1, port=8100) has SENT the message: 
-	 Message{origin=Address(ip=127.0.0.1, port=8090) destination=Address(ip=127.0.0.1, port=8110) next=Address(ip=127.0.0.1, port=8080) prev=Address(ip=127.0.0.1, port=8080)}.
-[41:17.426] Node Address(ip=127.0.0.1, port=8100) is TRYING to JOIN the network(Address(ip=127.0.0.1, port=8080)).
-[41:17.426] Address(ip=127.0.0.1, port=8100) has SENT the message: 
-	 Join{origin=Address(ip=127.0.0.1, port=8100) destination=Address(ip=127.0.0.1, port=8080) sendBy=Address(ip=127.0.0.1, port=8100)}.
-[41:17.443] Node Address(ip=127.0.0.1, port=8100) has RECEIVED the message: 
-	 Join{origin=Address(ip=127.0.0.1, port=8100) destination=Address(ip=127.0.0.1, port=8080) sendBy=Address(ip=127.0.0.1, port=8090)}.
-[41:17.445] Address(ip=127.0.0.1, port=8100) has SENT the message: 
-	 Election{origin=Address(ip=127.0.0.1, port=8100) destination=Address(ip=127.0.0.1, port=8080) candidate=Address(ip=127.0.0.1, port=8100)}.
-[41:17.455] Node Address(ip=127.0.0.1, port=8100) has RECEIVED the message: 
-	 Election{origin=Address(ip=127.0.0.1, port=8100) destination=Address(ip=127.0.0.1, port=8080) candidate=Address(ip=127.0.0.1, port=8100)}.
-[41:43.797] Node Address(ip=127.0.0.1, port=8100) has RECEIVED the message: 
-	 Join{origin=Address(ip=127.0.0.1, port=8110) destination=Address(ip=127.0.0.1, port=8080) sendBy=Address(ip=127.0.0.1, port=8080)}.
-[41:43.798] Address(ip=127.0.0.1, port=8100) has SENT the message: 
-	 Join{origin=Address(ip=127.0.0.1, port=8110) destination=Address(ip=127.0.0.1, port=8080) sendBy=Address(ip=127.0.0.1, port=8100)}.
-[41:43.817] Node Address(ip=127.0.0.1, port=8100) has RECEIVED the message: 
-	 Election{origin=Address(ip=127.0.0.1, port=8110) destination=Address(ip=127.0.0.1, port=8080) candidate=Address(ip=127.0.0.1, port=8110)}.
-[41:43.818] Address(ip=127.0.0.1, port=8100) has SENT the message: 
-	 Election{origin=Address(ip=127.0.0.1, port=8110) destination=Address(ip=127.0.0.1, port=8080) candidate=Address(ip=127.0.0.1, port=8110)}.
-[42:21.088] Node Address(ip=127.0.0.1, port=8100) is TRYING to SAFETY QUIT the network.
-[42:21.088] Address(ip=127.0.0.1, port=8100) has SENT the message: 
-	 Message{origin=Address(ip=127.0.0.1, port=8100) destination=Address(ip=127.0.0.1, port=8110) next=Address(ip=127.0.0.1, port=8110) prev=Address(ip=127.0.0.1, port=8090)}.
-[42:21.088] Address(ip=127.0.0.1, port=8100) has FAILED to SEND the message: 
-	 Message{origin=Address(ip=127.0.0.1, port=8100) destination=Address(ip=127.0.0.1, port=8110) next=Address(ip=127.0.0.1, port=8110) prev=Address(ip=127.0.0.1, port=8090)}.
-[42:21.088] Node Address(ip=127.0.0.1, port=8100) has SAVED message to the DRAFTS
-	Message{origin=Address(ip=127.0.0.1, port=8100) destination=Address(ip=127.0.0.1, port=8110) next=Address(ip=127.0.0.1, port=8110) prev=Address(ip=127.0.0.1, port=8090)}.
-[42:21.089] Node Address(ip=127.0.0.1, port=8100) is TRYING to FIX the network.
-[42:21.089] Address(ip=127.0.0.1, port=8100) has SENT the message: 
-	 Fix{origin=Address(ip=127.0.0.1, port=8100) destination=Address(ip=127.0.0.1, port=8090) quit=Address(ip=127.0.0.1, port=8110)}.
-[42:21.097] Node Address(ip=127.0.0.1, port=8100) has FAILED to SAFETY QUIT the network.
-[42:21.113] Node Address(ip=127.0.0.1, port=8100) has RECEIVED the message: 
-	 Fix{origin=Address(ip=127.0.0.1, port=8100) destination=Address(ip=127.0.0.1, port=8090) quit=Address(ip=127.0.0.1, port=8110)}.
-[42:21.114] Address(ip=127.0.0.1, port=8100) has SENT the message: 
-	 Fix{origin=Address(ip=127.0.0.1, port=8100) destination=Address(ip=127.0.0.1, port=8090) quit=Address(ip=127.0.0.1, port=8110)}.
-[42:21.117] Node Address(ip=127.0.0.1, port=8100) is TRYING to HANDLE DRAFTS and INBOX.
-[42:21.124] Node Address(ip=127.0.0.1, port=8100) has RECEIVED the message: 
-	 Fix{origin=Address(ip=127.0.0.1, port=8100) destination=Address(ip=127.0.0.1, port=8090) quit=Address(ip=127.0.0.1, port=8110)}.
-[43:26.895] Node Address(ip=127.0.0.1, port=8100) is TRYING to SAFETY QUIT the network.
-[43:26.895] Address(ip=127.0.0.1, port=8100) has SENT the message: 
-	 Message{origin=Address(ip=127.0.0.1, port=8100) destination=Address(ip=127.0.0.1, port=8080) next=Address(ip=127.0.0.1, port=8080) prev=Address(ip=127.0.0.1, port=8090)}.
-[43:56.516] Node Address(ip=127.0.0.1, port=8100) is TRYING to JOIN the network(Address(ip=127.0.0.1, port=8080)).
-[43:56.517] Address(ip=127.0.0.1, port=8100) has SENT the message: 
-	 Join{origin=Address(ip=127.0.0.1, port=8100) destination=Address(ip=127.0.0.1, port=8080) sendBy=Address(ip=127.0.0.1, port=8100)}.
-[43:56.534] Node Address(ip=127.0.0.1, port=8100) has RECEIVED the message: 
-	 Join{origin=Address(ip=127.0.0.1, port=8100) destination=Address(ip=127.0.0.1, port=8080) sendBy=Address(ip=127.0.0.1, port=8090)}.
-[43:56.535] Address(ip=127.0.0.1, port=8100) has SENT the message: 
-	 Election{origin=Address(ip=127.0.0.1, port=8100) destination=Address(ip=127.0.0.1, port=8080) candidate=Address(ip=127.0.0.1, port=8100)}.
-[43:56.544] Node Address(ip=127.0.0.1, port=8100) has RECEIVED the message: 
-	 Election{origin=Address(ip=127.0.0.1, port=8100) destination=Address(ip=127.0.0.1, port=8080) candidate=Address(ip=127.0.0.1, port=8100)}.
+[19:31.134] Node Address(ip=127.0.0.1, port=8100) is TRYING to SAFETY QUIT the network.
+[19:31.134] Address(ip=127.0.0.1, port=8100) has SENT the message: 
+	 Quit{origin=Address(ip=127.0.0.1, port=8100) destination=Address(ip=127.0.0.1, port=8110) next=Address(ip=127.0.0.1, port=8110) prev=Address(ip=127.0.0.1, port=8090)}.
+[19:31.138] Address(ip=127.0.0.1, port=8100) has FAILED to SEND the message: 
+	 Quit{origin=Address(ip=127.0.0.1, port=8100) destination=Address(ip=127.0.0.1, port=8110) next=Address(ip=127.0.0.1, port=8110) prev=Address(ip=127.0.0.1, port=8090)}.
+[19:31.139] Node Address(ip=127.0.0.1, port=8100) has SAVED message to the DRAFTS
+	Quit{origin=Address(ip=127.0.0.1, port=8100) destination=Address(ip=127.0.0.1, port=8110) next=Address(ip=127.0.0.1, port=8110) prev=Address(ip=127.0.0.1, port=8090)}.
+[19:31.139] Node Address(ip=127.0.0.1, port=8100) is TRYING to FIX the network.
+[19:31.141] Address(ip=127.0.0.1, port=8100) has SENT the message: 
+	 Fix{origin=Address(ip=127.0.0.1, port=8100) destination=Address(ip=127.0.0.1, port=8090) quit=Address(ip=127.0.0.1, port=8110) sendBy=Address(ip=127.0.0.1, port=8100) direction=false fixed=false } .
+[19:31.152] Node Address(ip=127.0.0.1, port=8100) has FAILED to SAFETY QUIT the network.
+[19:31.167] Node Address(ip=127.0.0.1, port=8100) has RECEIVED the message: 
+	 Fix{origin=Address(ip=127.0.0.1, port=8100) destination=Address(ip=127.0.0.1, port=8090) quit=Address(ip=127.0.0.1, port=8110) sendBy=Address(ip=127.0.0.1, port=8090) direction=true fixed=false } .
+[19:31.169] Address(ip=127.0.0.1, port=8100) has SENT the message: 
+	 Fix{origin=Address(ip=127.0.0.1, port=8100) destination=Address(ip=127.0.0.1, port=8090) quit=Address(ip=127.0.0.1, port=8110) sendBy=Address(ip=127.0.0.1, port=8100) direction=false fixed=false } .
+[19:31.172] Node Address(ip=127.0.0.1, port=8100) is TRYING to HANDLE DRAFTS and INBOX.
+[19:31.178] Node Address(ip=127.0.0.1, port=8100) has RECEIVED the message: 
+	 Fix{origin=Address(ip=127.0.0.1, port=8100) destination=Address(ip=127.0.0.1, port=8090) quit=Address(ip=127.0.0.1, port=8110) sendBy=Address(ip=127.0.0.1, port=8080) direction=false fixed=false } .

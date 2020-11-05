@@ -5,7 +5,6 @@ import cz.cvut.dsv.tomenyev.network.Network;
 import cz.cvut.dsv.tomenyev.network.Node;
 import cz.cvut.dsv.tomenyev.utils.Constant;
 import lombok.Getter;
-import lombok.ToString;
 
 import java.util.Objects;
 
@@ -21,22 +20,20 @@ public class Join extends AbstractMessage {
 
     @Override
     public void handleMessage(Node node) throws Exception {
-        if(node.getAddress().equals(getOrigin())) {
+        if (node.getAddress().equals(getOrigin())) {
             node.setNext(getDestination());
             node.setPrev(getSendBy());
             if(Constant.AUTOPILOT)
                 Network.getInstance().election(node);
 
-        } else if(node.getAddress().equals(getDestination())) {
+        } else if (node.getAddress().equals(getDestination())) {
             Address sendTo = Objects.isNull(node.getPrev()) ? getSendBy() : node.getPrev();
             node.setNext(Objects.isNull(node.getNext()) ? getSendBy() : node.getNext());
             node.setPrev(getSendBy());
             Network.getInstance().send(node, sendTo, this.withSendBy(node.getAddress()));
-        } else if(node.getNext().equals(getDestination())) {
+        } else if (node.getNext().equals(getDestination())) {
             node.setNext(getOrigin());
             Network.getInstance().send(node, node.getNext(), this.withSendBy(node.getAddress()));
-        } else {
-            System.out.println("join exception has occurred.");
         }
     }
 

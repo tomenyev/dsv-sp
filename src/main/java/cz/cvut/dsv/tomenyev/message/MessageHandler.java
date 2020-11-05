@@ -12,14 +12,11 @@ public class MessageHandler implements Runnable {
 
     private final Runnable finished;
 
-
     @Override
     public void run() {
         try {
             message.handleMessage(node);
-        } catch (Exception ignored) {
-
-        }
+        } catch (Exception ignored) {}
         if(finished != null)
             finished.run();
     }

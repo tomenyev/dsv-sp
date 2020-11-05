@@ -19,11 +19,13 @@ public class Election extends AbstractMessage {
 
     @Override
     public void handleMessage(Node node) throws Exception {
-        if(node.getAddress().equals(getCandidate())) {
+
+        if (node.getAddress().equals(getCandidate())) {
             node.setLeader(node.getAddress());
             return;
         }
-        if(node.getAddress().isGreaterThan(getCandidate())) {
+
+        if (node.getAddress().isGreaterThan(getCandidate())) {
             node.setLeader(node.getAddress());
             Election election = new Election(node.getAddress(), node.getNext(), node.getAddress());
             Network.getInstance().send(node, node.getNext(), election);
@@ -31,6 +33,7 @@ public class Election extends AbstractMessage {
             node.setLeader(getCandidate());
             Network.getInstance().send(node, node.getNext(), this);
         }
+
     }
 
     @Override

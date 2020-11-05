@@ -6,17 +6,16 @@ import cz.cvut.dsv.tomenyev.network.Node;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 import java.util.Objects;
 
 @Getter
+@Setter
 @EqualsAndHashCode(callSuper = true)
 public class Message extends AbstractMessage {
 
     private final String message;
 
-    @Setter
     private Address newDestination;
 
     public Message(Address origin, Address destination, String message) {
@@ -26,16 +25,13 @@ public class Message extends AbstractMessage {
 
     @Override
     public void handleMessage(Node node) throws Exception {
-
         if(!node.getAddress().equals(getOrigin()) && !getDestination().equals(getNewDestination()))
             node.addMessage(getMessage());
-
 
         if(node.getNext().equals(Objects.isNull(getNewDestination()) ? getDestination() : getNewDestination()))
             return;
 
         Network.getInstance().send(node, node.getNext(), this);
-
     }
 
     @Override

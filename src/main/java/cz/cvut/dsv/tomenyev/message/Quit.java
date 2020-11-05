@@ -6,7 +6,6 @@ import cz.cvut.dsv.tomenyev.network.Node;
 import cz.cvut.dsv.tomenyev.utils.Constant;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 import java.util.Objects;
 
@@ -30,7 +29,6 @@ public class Quit extends AbstractMessage {
 
     @Override
     public void handleMessage(Node node) throws Exception {
-
         if(node.getAddress().equals(getOrigin())) {
             node.clear();
             return;
@@ -49,7 +47,6 @@ public class Quit extends AbstractMessage {
         }
 
         Network.getInstance().send(node, node.getNext(), this);
-
     }
 
     @Override

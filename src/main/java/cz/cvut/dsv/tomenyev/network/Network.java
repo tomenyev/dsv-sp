@@ -8,11 +8,8 @@ import lombok.NoArgsConstructor;
 
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import java.util.Iterator;
-import java.util.LinkedHashSet;
 import java.util.Objects;
 
-@SuppressWarnings("UnusedReturnValue")
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class Network {
 
@@ -28,7 +25,6 @@ public class Network {
             node.setOk(false);
             throw new Exception();
         }
-        Log.getInstance().print(Log.To.BOTH, "Node " +node.getAddress() +" has INITIALIZED network");
     }
 
     public Network election(Node node) throws Exception {
@@ -42,10 +38,9 @@ public class Network {
         return this;
     }
 
-    public Network join(Node node, Address remote) throws Exception {
+    public void join(Node node, Address remote) throws Exception {
         Join join = new Join(node.getAddress(), remote, node.getAddress());
         this.send(node, remote, join);
-        return this;
     }
 
     public Network quit(Node node) throws Exception {
@@ -66,43 +61,37 @@ public class Network {
         return this;
     }
 
-    public Network send(Node origin, Address destination, AbstractMessage message) throws Exception {
+    public void send(Node origin, Address destination, AbstractMessage message) throws Exception {
         Log.getInstance().print(Log.To.BOTH, origin.getAddress() + " has SENT the message: \n\t "+message);
         try {
             Registry registry = LocateRegistry.getRegistry(destination.getIp(), destination.getPort());
             AbstractNode node = (AbstractNode) registry.lookup(Constant.NAME);
             node.handleMessage(message);
         } catch (Exception e) {
-
             Log.getInstance().print(Log.To.BOTH, origin.getAddress() + " has FAILED to SEND the message: \n\t "+message);
             origin.addDraft(message);
             if(Constant.AUTOPILOT)
                 origin.fixNetwork(destination);
             throw new Exception();
         }
-        return this;
     }
 
-    public Network send(Node node, String message) throws Exception {
+    public void send(Node node, String message) throws Exception {
         if(Objects.nonNull(node.getNext())) {
             Message m = new Message(node.getAddress(), node.getLeader(), message);
             this.send(node, node.getLeader(), m);
         } else {
             Log.getInstance().print(Log.To.BOTH, "Node " + node.getAddress() + " is single");
         }
-        return this;
     }
 
-    public Network fix(Node node, Address quit) throws Exception {
-
+    public void fix(Node node, Address quit) throws Exception {
         if(quit.equals(node.getPrev()) && quit.equals(node.getNext()) || Objects.isNull(node.getNext()) || Objects.isNull(node.getPrev())) {
             Log.getInstance().print(Log.To.BOTH, "Node " + node.getAddress() + " is single");
             node.clear();
-            return this;
+            return;
         }
-
         node.setFixing(true);
-
         try {
             Address sendTo = node.getPrev().equals(quit) ? node.getNext() : node.getPrev();
             Fix fix = new Fix(node.getAddress(), sendTo, quit, node.getAddress(), node.getPrev().equals(quit));
@@ -112,17 +101,16 @@ public class Network {
             node.clear().setFixing(false);
             throw new Exception();
         }
-
-        return this;
     }
 
-    public Network handleFails(Node node) {
+    public void handleFails(Node node) {
         boolean quit = false;
         Log.getInstance().print(Log.To.BOTH, "Node " + node.getAddress() + " is TRYING to HANDLE DRAFTS and INBOX");
         node.setFixing(false);
         if(Objects.nonNull(node.getNext())) {
             try {
-                for (AbstractMessage message : node.getDrafts()) {
+                while (!node.getDrafts().isEmpty()) {
+                    AbstractMessage message = node.getDrafts().remove();
                     if (message instanceof Message) {
                         Message m = (Message) message;
                         m.setNewDestination(node.getLeader());
@@ -142,11 +130,10 @@ public class Network {
                         this.send(node, node.getNext(), message);
                     }
                 }
-                node.setDrafts(new LinkedHashSet<>());
-                for (AbstractMessage message : node.getInbox()) {
+                while (!node.getDrafts().isEmpty()) {
+                    AbstractMessage message = node.getInbox().remove();
                     node.handleMessage(message);
                 }
-                node.setInbox(new LinkedHashSet<>());
             } catch (Exception e) {
 //                e.printStackTrace();
                   Log.getInstance().print(Log.To.BOTH, "Node " + node.getAddress() + " has FAILED to HANDLE DRAFTS and INBOX");
@@ -156,7 +143,6 @@ public class Network {
             node.clear();
             Log.getInstance().print(Log.To.CONSOLE, Constant.QUIT_MESSAGE);
         }
-        return this;
     }
 
     public static Network getInstance() {

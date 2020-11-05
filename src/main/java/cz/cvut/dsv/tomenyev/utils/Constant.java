@@ -2,11 +2,25 @@ package cz.cvut.dsv.tomenyev.utils;
 
 public class Constant {
 
-    public final static String NAME = "CHAT";
+    public final static String NAME = "tomenyev";
 
-    public static final String ARGS_HELP = "";
+    public static final String ARGS_HELP =
+            "\nUsage: "+NAME+" <node address> <existing network address> <log file path> \n" +
+            "\t\t<node address> - (REQUIRED) current node address in format ip:port(e.g. 127.0.0.1:8080).\n" +
+            "\t\t<existing network address> -(OPTIONAL) existing network address in format ip:port(e.g. 127.0.0.1:8080). Used to join existing network.\n" +
+            "\t\t<log file path> - (REQUIRED) path to the log file.";
 
-    public static final String CHAT_HELP = "";
+    public static final String CHAT_HELP =
+            "\n\ts\tprint node status\n" +
+            "\tie\tinitialize leader election\n" +
+            "\tm\tbroadcast text message\n" +
+            "\tjn\tjoin existing network(eg. 127.0.0.1:8080)\n" +
+            "\tf\tfix network(missing node address)\n" +
+            "\th\tprint commands\n" +
+            "\tq\tsafety quit the network\n" +
+            "\tfq\tforcibly quit the network\n" +
+            "\tl\tprint complete log from the log file";
+
 
     public static final String ENTER_MESSAGE_CURSOR = "message > ";
 
