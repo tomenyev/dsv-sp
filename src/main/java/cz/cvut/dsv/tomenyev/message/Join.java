@@ -9,8 +9,14 @@ import lombok.Getter;
 import java.util.Objects;
 
 @Getter
+/**
+ * Message used when new node join the network to put new node on the right place.
+ */
 public class Join extends AbstractMessage {
 
+    /**
+     * last message sender
+     */
     private Address sendBy;
 
     public Join(Address origin, Address destination, Address sendBy) {

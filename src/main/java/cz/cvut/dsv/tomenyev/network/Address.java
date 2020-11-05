@@ -14,6 +14,9 @@ import java.net.UnknownHostException;
 @Getter
 @ToString
 @EqualsAndHashCode
+/**
+ * Network node unique id. Consists of ip and port. eg. 127.0.0.1:8080
+ */
 public class Address implements Serializable {
 
     private final String ip;

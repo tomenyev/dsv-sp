@@ -20,5 +20,4 @@ public class MessageHandler implements Runnable {
         if(finished != null)
             finished.run();
     }
-
 }

@@ -17,30 +17,58 @@ import java.util.*;
 @Getter
 @Setter
 @ToString(of = {"address", "next", "prev", "leader", "ok", "fixing", "messages", "inbox", "drafts"})
+/**
+ * Network node representation.
+ */
 public class Node extends UnicastRemoteObject implements AbstractNode {
 
+    /**
+     * node unique id.
+     */
     private final Address address;
 
+    /**
+     * next node in the ring network
+     */
     private Address next;
 
+    /**
+     * previous node in the ring network
+     */
     private Address prev;
 
+    /**
+     * leader of the network
+     */
     private Address leader;
 
     private boolean ok = false;
 
     private boolean fixing = false;
 
+    /**
+     * text messages archive
+     */
     private List<String> messages = new ArrayList<>();
 
+    /**
+     * inbox for saving income messages while fixing.
+     */
     private Queue<AbstractMessage> inbox = new LinkedList<>();
 
+    /**
+     * drafts for saving outcome messages while fixing.
+     */
     private Queue<AbstractMessage> drafts = new LinkedList<>();
 
     public Node(Address address) throws RemoteException {
         this.address = address;
     }
 
+    /**
+     * Initializing new network
+     * @return current node instance
+     */
     public Node initNetwork() {
         boolean ok;
         Log.getInstance().print(Log.To.BOTH, "Node " +getAddress() +" is TRYING to INITIALIZE the network");
@@ -58,6 +86,10 @@ public class Node extends UnicastRemoteObject implements AbstractNode {
         return this;
     }
 
+    /**
+     * Joining existing network
+     * @param remote address of existing node.
+     */
     public void joinNetwork(Address remote) {
         boolean ok;
         Log.getInstance().print(Log.To.BOTH, "Node " + getAddress()+" is TRYING to JOIN the network("+remote+")");
@@ -73,6 +105,9 @@ public class Node extends UnicastRemoteObject implements AbstractNode {
             Log.getInstance().print(Log.To.BOTH, "Node " + getAddress()+" has JOINED the network("+remote+")");
     }
 
+    /**
+     * Initializing leader election in the network ring
+     */
     public void initElection() {
         Log.getInstance().print(Log.To.BOTH, "Node " +getAddress() +" is TRYING to INITIALIZE LEADER ELECTION");
         try {
@@ -83,6 +118,10 @@ public class Node extends UnicastRemoteObject implements AbstractNode {
         }
     }
 
+    /**
+     * Broadcasting text message to the network.
+     * @param message text message
+     */
     public void sendMessage(String message) {
         Log.getInstance().print(Log.To.BOTH, "Node "+getAddress()+" has SENT the TEXT message: " + message);
         try {
@@ -93,6 +132,24 @@ public class Node extends UnicastRemoteObject implements AbstractNode {
         }
     }
 
+
+    /**
+     * Fix the network
+     * @param quit address of quit node
+     */
+    public void fixNetwork(Address quit) {
+        Log.getInstance().print(Log.To.BOTH, "Node " + getAddress() + " is TRYING to FIX the network");
+        try {
+            Network.getInstance().fix(this, quit);
+        } catch (Exception e) {
+            Log.getInstance().print(Log.To.BOTH, "Node " + getAddress() + " has FAILED to FIX the network");
+//            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Safety quit the network
+     */
     public void quitNetwork() {
         boolean ok;
         Log.getInstance().print(Log.To.BOTH, "Node " + getAddress() + " is TRYING to SAFETY QUIT the network");
@@ -110,21 +167,19 @@ public class Node extends UnicastRemoteObject implements AbstractNode {
         }
     }
 
-    public void fixNetwork(Address quit) {
-        Log.getInstance().print(Log.To.BOTH, "Node " + getAddress() + " is TRYING to FIX the network");
-        try {
-            Network.getInstance().fix(this, quit);
-        } catch (Exception e) {
-            Log.getInstance().print(Log.To.BOTH, "Node " + getAddress() + " has FAILED to FIX the network");
-//            e.printStackTrace();
-        }
-    }
-
+    /**
+     * Forcibly, unsafely quit the network.
+     */
     public void forceQuitNetwork() {
         Log.getInstance().print(Log.To.BOTH, "Node " + getAddress() + " has FORCIBLY QUIT the network");
         setOk(false);
     }
 
+    /**
+     * handle income messages
+     * @param message income message
+     * @throws RemoteException
+     */
     @Override
     public void handleMessage(AbstractMessage message) throws RemoteException {
         Log.getInstance().print(Log.To.BOTH, "Node "+getAddress() + " has RECEIVED the message: \n\t "+message);

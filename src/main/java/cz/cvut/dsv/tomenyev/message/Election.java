@@ -8,6 +8,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
+/**
+ * Message used for providing leader election in the network.
+ */
 public class Election extends AbstractMessage {
 
     private Address candidate;

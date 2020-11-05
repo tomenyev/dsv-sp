@@ -10,18 +10,30 @@ import java.util.Objects;
 
 @Getter
 @Setter
+/**
+ * Message used for fixing the broken network.
+ */
 public class Fix extends AbstractMessage{
 
+    /**
+     * address that belongs to the node that quit the network.
+     */
     private final Address quit;
 
     private Address next;
 
     private Address prev;
 
+    /**
+     * last message sender
+     */
     private Address sendBy;
 
     private Address candidate;
 
+    /**
+     * ring flow direction
+     */
     private boolean direction;
 
     private boolean joinFailed = false;

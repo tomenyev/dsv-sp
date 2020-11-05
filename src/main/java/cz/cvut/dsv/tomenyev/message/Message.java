@@ -12,6 +12,9 @@ import java.util.Objects;
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = true)
+/**
+ * Message used for broadcasting text content to the network.
+ */
 public class Message extends AbstractMessage {
 
     private final String message;

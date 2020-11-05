@@ -13,8 +13,16 @@ import java.util.Objects;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class Network {
 
+    /**
+     * SINGLETON
+     */
     private static Network instance;
 
+    /**
+     * Initializing the new network
+     * @param node node that is initialized the network
+     * @throws Exception
+     */
     public void init(Node node) throws Exception {
         try {
             LocateRegistry
@@ -27,6 +35,12 @@ public class Network {
         }
     }
 
+    /**
+     * Providing leader election in the network
+     * @param node node that initialized the election
+     * @return itself
+     * @throws Exception
+     */
     public Network election(Node node) throws Exception {
         if (node.getNext() == null) {
             Log.getInstance().print(Log.To.BOTH, "Node "+node.getAddress()+" is single");
@@ -38,11 +52,23 @@ public class Network {
         return this;
     }
 
+    /**
+     * Append new node to the existing network
+     * @param node new node
+     * @param remote existing network
+     * @throws Exception
+     */
     public void join(Node node, Address remote) throws Exception {
         Join join = new Join(node.getAddress(), remote, node.getAddress());
         this.send(node, remote, join);
     }
 
+    /**
+     * Providing safety quit
+     * @param node node that quit the network
+     * @return itself
+     * @throws Exception
+     */
     public Network quit(Node node) throws Exception {
         if(Objects.isNull(node.getNext())) {
             Log.getInstance().print(Log.To.BOTH, "Node "+node.getAddress()+" is single");
@@ -61,6 +87,13 @@ public class Network {
         return this;
     }
 
+    /**
+     * Send message from origin to the destination
+     * @param origin
+     * @param destination
+     * @param message
+     * @throws Exception
+     */
     public void send(Node origin, Address destination, AbstractMessage message) throws Exception {
         Log.getInstance().print(Log.To.BOTH, origin.getAddress() + " has SENT the message: \n\t "+message);
         try {
@@ -76,6 +109,12 @@ public class Network {
         }
     }
 
+    /**
+     * Broadcast text message to the network
+     * @param node
+     * @param message
+     * @throws Exception
+     */
     public void send(Node node, String message) throws Exception {
         if(Objects.nonNull(node.getNext())) {
             Message m = new Message(node.getAddress(), node.getLeader(), message);
@@ -85,6 +124,12 @@ public class Network {
         }
     }
 
+    /**
+     * fix broken network
+     * @param node node that init fixing
+     * @param quit node that forcibly left the network
+     * @throws Exception
+     */
     public void fix(Node node, Address quit) throws Exception {
         if(quit.equals(node.getPrev()) && quit.equals(node.getNext()) || Objects.isNull(node.getNext()) || Objects.isNull(node.getPrev())) {
             Log.getInstance().print(Log.To.BOTH, "Node " + node.getAddress() + " is single");
@@ -103,6 +148,10 @@ public class Network {
         }
     }
 
+    /**
+     * Handle income/outcome messages that were accumulating while fixing.
+     * @param node
+     */
     public void handleFails(Node node) {
         boolean quit = false;
         Log.getInstance().print(Log.To.BOTH, "Node " + node.getAddress() + " is TRYING to HANDLE DRAFTS and INBOX");

@@ -3,6 +3,9 @@ package cz.cvut.dsv.tomenyev.utils;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
+/**
+ * Program commands.
+ */
 public enum Command {
 
     INIT_NETWORK,

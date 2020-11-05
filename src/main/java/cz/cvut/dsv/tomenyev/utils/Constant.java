@@ -1,5 +1,8 @@
 package cz.cvut.dsv.tomenyev.utils;
 
+/**
+ * Program constants.
+ */
 public class Constant {
 
     public final static String NAME = "tomenyev";

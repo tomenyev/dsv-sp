@@ -2,13 +2,13 @@ package cz.cvut.dsv.tomenyev.utils;
 
 import cz.cvut.dsv.tomenyev.Main;
 
-import java.io.*;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -18,6 +18,9 @@ public class Log {
         FILE, CONSOLE, BOTH
     }
 
+    /**
+     * SINGLETON
+     */
     private static Log instance;
 
     private FileOutputStream log;
@@ -82,6 +85,9 @@ public class Log {
         return instance;
     }
 
+    /**
+     * print content from log file to the console.
+     */
     public void printLog() {
         try {
             Files.readAllLines(Paths.get(path))

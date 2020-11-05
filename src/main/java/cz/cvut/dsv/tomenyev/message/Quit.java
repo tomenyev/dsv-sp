@@ -12,6 +12,9 @@ import java.util.Objects;
 
 @Getter
 @Setter
+/**
+ * Message used for providing safety quit.
+ */
 public class Quit extends AbstractMessage {
 
     private Address next;
