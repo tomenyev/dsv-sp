@@ -12,7 +12,26 @@
   <p>Java RMI</p>
   
 # Návod jak práci zprovoznit
-
+## Požadavky na spuštění
 <ol>
-  <li>lorem</li>
+  <li>Java 1.8</li>
+  <li>Maven</li>
+  <li>Git(Optional)</li>
 </ol>
+
+## Instalace a sestavení
+### 1. 
+
+    cd <path to the project folder>
+    mvn package
+    
+### 2.
+
+    cd <path to the project folder>
+    mvn package
+    
+## Spuštění
+
+    java -jar target/tomenyev.jar <ip:port - current node> (OPTIONAL)<ip:port - existing node> <path to the log file>
+   
+
