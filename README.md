@@ -32,10 +32,10 @@
 
     java -jar target/tomenyev.jar <node address> <existing network address> <log file path>
     
-## Usage
+## Args
 
-   <node address> - (REQUIRED) current node address in format ip:port(e.g. 127.0.0.1:8080)
-   <existing network address> -(OPTIONAL) existing network address in format ip:port(e.g. 127.0.0.1:8080). Used to join existing network
+    <node address> - (REQUIRED) current node address in format ip:port(e.g. 127.0.0.1:8080)
+    <existing network address> -(OPTIONAL) existing network address in format ip:port(e.g. 127.0.0.1:8080). Used to join existing network
     <log file path> - (REQUIRED) path to the log file
    
 
