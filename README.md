@@ -12,7 +12,9 @@
   <p>Java RMI</p>
   
 # Návod jak práci zprovoznit
-
+## Požadavky na spuštění
 <ol>
-  <li>lorem</li>
+  <li>Java 1.8</li>
+  <li>Maven</li>
 </ol>
+
