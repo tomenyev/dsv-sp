@@ -34,9 +34,9 @@ public class Log {
     private Log(String path) {
         try {
             this.path += path;
-            this.log = new FileOutputStream(path, false);
+            this.log = new FileOutputStream(this.path, false);
         } catch (FileNotFoundException ex) {
-            ex.printStackTrace();
+//            ex.printStackTrace();
         }
     }
 
@@ -50,7 +50,7 @@ public class Log {
                 try {
                     log.write(text.getBytes());
                 } catch (IOException ex) {
-                    Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+//                    Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 break;
             case CONSOLE:
@@ -62,7 +62,7 @@ public class Log {
                 try {
                     log.write(text.getBytes());
                 } catch (IOException ex) {
-                    Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+//                    Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 System.out.print(text);
                 break;
@@ -80,7 +80,8 @@ public class Log {
 
     @SuppressWarnings("UnusedReturnValue")
     public static Log setInstance(String path) {
-        instance = new Log(path);
+        if(Objects.isNull(instance))
+            instance = new Log(path);
         return instance;
     }
 
@@ -98,7 +99,7 @@ public class Log {
             Files.readAllLines(Paths.get(path))
                     .forEach(System.out::println);
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
     }
 }
