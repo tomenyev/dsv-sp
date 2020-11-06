@@ -20,12 +20,15 @@
 </ol>
 
 ## Instalace a sestavení
+### 1. 
 
-###1.
     cd <path to the project folder>
     mvn package
-###2.
     
+### 2.
+
+    cd <path to the project folder>
+    mvn package
     
 ## Spuštění
 
