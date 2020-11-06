@@ -68,8 +68,7 @@ public class Log {
     public void close() {
         try {
             log.close();
-        } catch (IOException ex) {
-            ex.printStackTrace();
+        } catch (IOException ignored) {
         }
     }
 
