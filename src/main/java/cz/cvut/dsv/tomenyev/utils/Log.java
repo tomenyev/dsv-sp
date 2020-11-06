@@ -29,11 +29,11 @@ public class Log {
 
     private FileOutputStream log;
 
-    private String path;
+    private String path = "logging/";
 
     private Log(String path) {
         try {
-            this.path = path;
+            this.path += path;
             this.log = new FileOutputStream(path, false);
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();

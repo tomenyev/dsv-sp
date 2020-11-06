@@ -2,14 +2,16 @@ package cz.cvut.dsv.tomenyev;
 
 import cz.cvut.dsv.tomenyev.network.Address;
 import cz.cvut.dsv.tomenyev.network.Node;
-import cz.cvut.dsv.tomenyev.utils.*;
+import cz.cvut.dsv.tomenyev.utils.Command;
+import cz.cvut.dsv.tomenyev.utils.Constant;
+import cz.cvut.dsv.tomenyev.utils.Log;
 
 import java.util.Objects;
 import java.util.Scanner;
 
 public class Main {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         if(args.length < 2 || args.length > 3) {
             Log.getInstance().print(Log.To.CONSOLE, Constant.ARGS_HELP);
             exit();

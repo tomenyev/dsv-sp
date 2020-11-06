@@ -8,10 +8,10 @@ public class Constant {
     public final static String NAME = "tomenyev";
 
     public static final String ARGS_HELP =
-            "\nUsage: "+NAME+" <node address> <existing network address> <log file path> \n" +
+            "\nUsage: "+NAME+" <node address> <existing network address> <log file name> \n" +
             "\t\t<node address> - (REQUIRED) current node address in format ip:port(e.g. 127.0.0.1:8080).\n" +
             "\t\t<existing network address> -(OPTIONAL) existing network address in format ip:port(e.g. 127.0.0.1:8080). Used to join existing network.\n" +
-            "\t\t<log file path> - (REQUIRED) path to the log file.";
+            "\t\t<log file name> - (REQUIRED) name of the log file.";
 
     public static final String CHAT_HELP =
             "\n\ts\tprint node status\n" +
