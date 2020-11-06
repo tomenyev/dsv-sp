@@ -1,6 +1,8 @@
 package cz.cvut.dsv.tomenyev.utils;
 
 import cz.cvut.dsv.tomenyev.Main;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -9,9 +11,11 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class Log {
 
     public enum To {
@@ -66,6 +70,8 @@ public class Log {
     }
 
     public void close() {
+        if(log == null)
+            return;
         try {
             log.close();
         } catch (IOException ignored) {
@@ -79,8 +85,8 @@ public class Log {
     }
 
     public static Log getInstance() {
-        if(instance == null)
-            instance = new Log("");
+        if(Objects.isNull(instance))
+            instance = new Log();
         return instance;
     }
 
