@@ -25,6 +25,8 @@ public class Constant {
             "\tl\tprint complete log from the log file";
 
 
+    public static final String CURSOR = "tomenyev > ";
+
     public static final String ENTER_MESSAGE_CURSOR = "message > ";
 
     public static final String JOIN_MESSAGE_CURSOR = "address > ";

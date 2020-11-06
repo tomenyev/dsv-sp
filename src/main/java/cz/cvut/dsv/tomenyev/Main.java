@@ -39,6 +39,7 @@ public class Main {
                     node.joinNetwork(remote);
 
                 while(!Thread.interrupted() && node.isOk()) {
+                    System.out.print(Constant.CURSOR);
                     switch (Command.convert(next(input))) {
                         case PRINT_STATUS:
                             Log.getInstance().print(Log.To.CONSOLE, node.toString());
@@ -50,7 +51,7 @@ public class Main {
                             node.initElection();
                             break;
                         case JOIN_NETWORK:
-                            System.out.print(Constant.JOIN_MESSAGE_CURSOR);
+                            System.out.print(Constant.CURSOR + Constant.JOIN_MESSAGE_CURSOR);
                             try {
                                 remote = new Address(input.nextLine());
                             } catch (Exception ignored) {
@@ -60,7 +61,7 @@ public class Main {
                             node.joinNetwork(remote);
                             break;
                         case SEND_MESSAGE:
-                            System.out.print(Constant.ENTER_MESSAGE_CURSOR);
+                            System.out.print(Constant.CURSOR + Constant.ENTER_MESSAGE_CURSOR);
                             node.sendMessage(input.nextLine());
                             break;
                         case QUIT:
@@ -74,7 +75,7 @@ public class Main {
                             Log.getInstance().print(Log.To.CONSOLE, Constant.CHAT_HELP);
                             break;
                         case FIX:
-                            System.out.print(Constant.FIX_MESSAGE_CURSOR);
+                            System.out.print(Constant.CURSOR + Constant.FIX_MESSAGE_CURSOR);
                             Address fix;
                             try {
                                 fix = new Address(input.nextLine());
