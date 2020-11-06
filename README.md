@@ -19,19 +19,23 @@
   <li>Git(Optional)</li>
 </ol>
 
-## Instalace a sestavení
-### 1. 
+## Instalace
 
-    cd <path to the project folder>
-    mvn package
+    git clone https://github.com/tomenyev/dsv-sp.git
     
-### 2.
+## Sestavení 
 
     cd <path to the project folder>
     mvn package
     
 ## Spuštění
 
-    java -jar target/tomenyev.jar <ip:port - current node> (OPTIONAL)<ip:port - existing node> <path to the log file>
+    java -jar target/tomenyev.jar <node address> <existing network address> <log file path>
+    
+## Usage
+
+   <node address> - (REQUIRED) current node address in format ip:port(e.g. 127.0.0.1:8080)
+   <existing network address> -(OPTIONAL) existing network address in format ip:port(e.g. 127.0.0.1:8080). Used to join existing network
+    <log file path> - (REQUIRED) path to the log file
    
 
