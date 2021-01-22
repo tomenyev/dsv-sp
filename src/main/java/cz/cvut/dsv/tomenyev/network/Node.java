@@ -46,6 +46,8 @@ public class Node extends UnicastRemoteObject implements AbstractNode {
 
     private boolean fixing = false;
 
+    private boolean voted = false;
+
     /**
      * text messages archive
      */

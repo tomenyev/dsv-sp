@@ -22,21 +22,20 @@ public class Election extends AbstractMessage {
 
     @Override
     public void handleMessage(Node node) throws Exception {
-
-        if (node.getAddress().equals(getCandidate())) {
-            node.setLeader(node.getAddress());
-            return;
-        }
-
-        if (node.getAddress().isGreaterThan(getCandidate())) {
-            node.setLeader(node.getAddress());
+        if(getCandidate().isGreaterThan(node.getAddress())) {
+            node.setVoted(true);
+            Election election = new Election(node.getAddress(), node.getNext(), getCandidate());
+            Network.getInstance().send(node, node.getNext(), election);
+        } else if(node.getAddress().isGreaterThan(getCandidate()) && !node.isVoted()) {
+            node.setVoted(true);
             Election election = new Election(node.getAddress(), node.getNext(), node.getAddress());
             Network.getInstance().send(node, node.getNext(), election);
-        } else {
+        } else if(getCandidate().equals(node.getAddress())) {
             node.setLeader(getCandidate());
-            Network.getInstance().send(node, node.getNext(), this);
+            node.setVoted(false);
+            Elected elected = new Elected(node.getAddress(), node.getNext(), node.getLeader());
+            Network.getInstance().send(node, node.getNext(), elected);
         }
-
     }
 
     @Override

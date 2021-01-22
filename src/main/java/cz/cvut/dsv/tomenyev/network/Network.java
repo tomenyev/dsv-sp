@@ -47,6 +47,7 @@ public class Network {
             node.setLeader(node.getAddress());
         } else {
             Election election = new Election(node.getAddress(), node.getNext(), node.getAddress());
+            node.setVoted(true);
             this.send(node, node.getNext(), election);
         }
         return this;

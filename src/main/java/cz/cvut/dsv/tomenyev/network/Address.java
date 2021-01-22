@@ -40,10 +40,10 @@ public class Address implements Serializable {
 
         this.ip = strs[0];
 
-        if(!InetAddressValidator.getInstance().isValid(this.ip)) {
-            Log.getInstance().print(Log.To.CONSOLE, Constant.BAD_ADDRESS_FORMAT);
-            throw new Exception();
-        }
+//        if(!InetAddressValidator.getInstance().isValid(this.ip)) {
+//            Log.getInstance().print(Log.To.CONSOLE, Constant.BAD_ADDRESS_FORMAT);
+//            throw new Exception();
+//        }
     }
 
     public boolean isGreaterThan(Address addr) throws UnknownHostException {
